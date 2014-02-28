@@ -1,0 +1,1402 @@
+\documentclass[svgnames]{beamer}
+
+\usetheme{Dresden}
+\usecolortheme{beaver}
+
+\usepackage{import, fancybox, graphicx, color, colortbl, bm, transparent}
+
+\newcommand{\ssline}{\vspace{8 pt}}
+
+\title{Transport Architectures for an Evolving Internet}
+
+\author{Keith~Winstein}
+\institute{MIT Computer Science and Artificial Intelligence Laboratory}
+\date{March 10, 2014}
+
+\begin{document}
+
+\begin{frame}[plain]
+
+\titlepage
+
+\begin{centering}
+
+\includegraphics[width=2 cm]{csaillogomed.png}
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+\tiny Joint work with Anirudh Sivaraman, Pratiksha Thaker, and Hari Balakrishnan.
+
+\end{centering}
+
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}
+\frametitle{The Internet evolves}
+
+\large
+
+In 20 years, computer networks have seen dramatic change:
+
+\vspace{\baselineskip}
+
+\begin{itemize}
+
+\item Wi-Fi
+
+\item Cellular networks
+
+\item Datacenters
+
+\item 10 GigE
+
+\item Transoceanic links
+
+\item[]
+
+\item Ubiquitous mobility
+
+\item Huge amounts of streaming video
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Coping with change}
+
+\Large
+
+\textcolor{DarkBlue}{How should users deal with an evolving network?}
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+\textcolor{DarkGreen}{One approach: design new protocols.}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The march of congestion-control protocols}
+\only<1>{\noindent \hspace{-.75 cm} \includegraphics[width=1.1\textwidth]{march2-1.pdf}
+
+}
+\only<2>{\noindent \hspace{-.75 cm} \includegraphics[width=1.1\textwidth]{march2-2.pdf}
+
+}
+\only<3>{\noindent \hspace{-.75 cm} \includegraphics[width=1.1\textwidth]{march2-3.pdf}
+
+}
+\only<4>{\noindent \hspace{-.75 cm} \includegraphics[width=1.1\textwidth]{march2-4.pdf}
+
+}
+\only<5>{\noindent \hspace{-.75 cm} \includegraphics[width=1.1\textwidth]{march2-5b.pdf}
+
+}
+\only<6>{\noindent \hspace{-.75 cm} \includegraphics[width=1.1\textwidth]{march2-5.pdf}
+
+}
+\only<7>{\noindent \hspace{-.75 cm} \includegraphics[width=1.1\textwidth]{march2-6.pdf}
+
+}
+\only<8>{\noindent \hspace{-.75 cm} \includegraphics[width=1.1\textwidth]{march2-7.pdf}
+
+}
+\only<9>{\noindent \hspace{-.75 cm} \includegraphics[width=1.1\textwidth]{march2-8.pdf}
+
+}
+\only<10>{\noindent \hspace{-.75 cm} \includegraphics[width=1.1\textwidth]{march2-9.pdf}
+
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Our approach}
+
+\Large
+
+\begin{centering}
+
+\fbox{Protocols with a \textcolor{DarkBlue}{\bf model} and a \textcolor{DarkGreen}{\bf mission}.}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Explicitness in protocol design}
+
+\large
+
+\noindent \textcolor{DarkBlue}{\bf Model}: explicit statement of assumptions about the network
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+\textcolor{DarkGreen}{\bf Mission}: objective that the application wants
+
+\end{frame}
+
+\section{Sprout}
+
+\begin{frame}
+\frametitle{Sprout: a transport protocol designed for variability}
+
+\large
+
+\textit{Observation:}
+
+\hspace{10 pt} Videoconferences perform poorly over cellular networks.
+
+\vspace{\baselineskip}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Verizon LTE uplink throughput}
+
+\begin{centering}
+
+{\small
+\def\svgwidth{\columnwidth}\input{allcapacity.pdf_tex}
+}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Interactive apps work poorly}
+
+\begin{itemize}
+\item We measured cellular networks while driving:
+
+\begin{itemize}
+\item {\color{red}\bf Verizon LTE}
+\item Verizon 3G (1xEV-DO)
+\item AT\&T LTE
+\item T-Mobile 3G (UMTS)
+\end{itemize}
+
+\item Then ran apps across replayed network trace:
+
+\begin{itemize}
+\item {\color{red}\bf Skype} (Windows 7)
+\item Google Hangouts (Chrome on Windows 7)
+\item Apple Facetime (OS X)
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Skype's performance}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Performance summary}
+
+{
+\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus4.pdf_tex}
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{What's wrong?}
+
+\begin{itemize}
+\item Exiting schemes \textbf{react} to congestion signals.
+
+\begin{itemize}
+\item Packet loss.
+\item Increase in round-trip time.
+\end{itemize}
+
+\item Feedback comes too late.
+
+\item The killer: \textbf{self-inflicted queueing delay}.
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Sprout's \textcolor{DarkGreen}{\bf mission}}
+
+\Large
+
+\begin{itemize}
+\item Most throughput
+\item Bounded risk of delay $>$ 100~ms
+\end{itemize}
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+\scriptsize
+
+KW, Anirudh Sivaraman, and Hari Balakrishnan, \textbf{Stochastic Forecasts Achieve High Throughput and Low Delay over Cellular Networks}, in \textit{Proceedings of USENIX NSDI 2013}, Lombard, Ill., April 2013
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Bounded risk of delay}
+\begin{itemize}
+
+\large
+
+\item \textbf{Infer} link speed from arrivals
+
+\item \textbf{Predict} future link speed
+
+\begin{itemize}
+\item Don't wait for congestion
+\end{itemize}
+
+\item \textbf{Control:} Send as much as possible, but require:
+
+\begin{itemize}
+
+\item 95\% chance all packets arrive within 100~ms
+
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{\textbf{Infer}: link speed from flicker noise process}
+
+\begin{centering}
+
+\def\svgwidth{0.7 \columnwidth}\input{vz-inter.pdf_tex}
+
+\end{centering}
+
+{\small (Verizon LTE, phone stationary.)}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{\textbf{Predict}: future link speed}
+
+\large
+
+\begin{itemize}
+\item \textcolor{DarkBlue}{\bf Model} evolution of speed as random walk.
+
+\begin{itemize}
+\item (Brownian motion)
+\end{itemize}
+
+\item Cautious forecast: 5th percentile cumulative packets
+
+\item Receiver makes forecast; sends back to sender
+
+%\item Almost all precalculated
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{centering}
+\frametitle{Sprout's \textcolor{DarkBlue}{\bf model}}
+\def\svgwidth{0.85 \columnwidth}\input{sprout-model.pdf_tex}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Sprout's model parameters}
+
+\begin{tabular}{ll}
+Volatility $\sigma$: fixed @ & $200~\frac{\textrm{pkts}/s}{\sqrt{s}}$ \\
+
+Expected outage time $1/\lambda_z$: & $1~s$ \\
+
+Tick length: & $20~ms$ \\
+
+Forecast length: & $160~ms$ \\
+
+Delay target: & $100~ms$ \\
+
+Risk tolerance: & $5 \%$ \\
+\end{tabular}
+
+\vspace{\baselineskip}
+
+All source code was \bf{\textcolor{DarkGreen}{frozen before data collection began.}}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{\textbf{Control}: fill up 100~ms forecast window}
+\begin{centering}
+\only<1>{\includegraphics[width=0.9\columnwidth]{forecast-minus6.pdf}}\only<2>{\includegraphics[width=0.9\columnwidth]{forecast-minus5.pdf}}\only<3>{\includegraphics[width=0.9\columnwidth]{forecast-minus4.pdf}}\only<4>{\includegraphics[width=0.9\columnwidth]{forecast-minus3.pdf}}\only<5>{\includegraphics[width=0.9\columnwidth]{forecast-minus2.pdf}}\only<6>{\includegraphics[width=0.9\columnwidth]{forecast-minus1.pdf}}\only<7>{\includegraphics[width=0.9\columnwidth]{forecast-final.pdf}}
+
+\end{centering}
+\end{frame}
+
+\begin{frame}
+\only<1>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus4.pdf_tex}}\only<2>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus3.pdf_tex}}\only<3>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus2.pdf_tex}}\only<4>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus1.pdf_tex}}\only<5>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink.pdf_tex}}\only<6>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Uplink.pdf_tex}}\only<7>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Verizon3G1xEV-DO-Downlink.pdf_tex}}\only<8>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Verizon3G1xEV-DO-Uplink.pdf_tex}}\only<9>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{ATTLTE-Downlink.pdf_tex}}\only<10>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{ATTLTE-Uplink.pdf_tex}}\only<11>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{T-Mobile3GUMTS-Downlink.pdf_tex}}\only<12>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{T-Mobile3GUMTS-Uplink.pdf_tex}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Overall results}
+
+\begin{tabular}{|l|c|c|}
+\hline
+{\color{blue}Sprout} vs.~ & Avg.~speedup & Delay reduction \\
+\hline
+\hline
+{\color{red}Skype} & $2.2\times$ & $7.9\times$ \\
+{\color{red}Hangout} & $4.4\times$ & $7.2\times$ \\
+{\color{red}Facetime} & $1.9\times$ & $8.7\times$ \\
+\hline
+{\color{ForestGreen}Compound} & $1.3\times$ & $4.8\times$ \\
+{\color{ForestGreen}TCP Vegas} & $1.1\times$ & $2.1\times$ \\
+{\color{ForestGreen}LEDBAT} & Same & $2.8\times$ \\
+{\color{Orange}Cubic} & \cellcolor{red!20} $0.91\times$ & $79\times$ \\
+%CUBIC/CoDel & & \\
+%Compound/CoDel & & \\
+\hline
+\end{tabular}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Competes with AQM even though end-to-end}
+\vspace{-1 cm}
+\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Codels.pdf_tex}
+\end{frame}
+
+\begin{frame}
+\frametitle{Replication by Stanford students (February--March 2013)}
+
+\large
+
+\begin{itemize}
+\item Alterman \& Quach reproduced part of Sprout paper
+
+\item[]
+
+\item {\scriptsize\texttt{http://ReproducingNetworkResearch.wordpress.com/2013/03/12/1216/}}
+
+\item[]
+
+\item Won best project award in Stanford networking class
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{M.I.T.~6.829 contest (March--April 2013)}
+
+\begin{itemize}
+\item Turnkey network emulator, evaluation
+
+\item Sender, receiver run in Linux containers
+
+\item 4th prize: \$20
+
+\item 3rd prize: \$30
+
+\item 2nd prize: \$40
+
+\item (If beat Sprout) 1st prize: \pause {\color{DarkBlue}{\bf Co-authorship on future paper}}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Baseline}
+
+\begin{centering}
+\includegraphics[width=0.9\columnwidth]{pointplot-nostudents.png}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Land of 3,000 student protocols}
+
+\begin{centering}
+\includegraphics[width=0.9\columnwidth]{pointplot.png}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Sprout was on the frontier}
+
+\begin{centering}
+\includegraphics[width=0.9\columnwidth]{pointplot-withhull.png}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Some commercial interest and implementations}
+
+\begin{tabular}{cp{2 cm}c}
+
+\includegraphics[width=4 cm]{screenhero.png} & & \includegraphics[width=4 cm]{highfive.png} \\
+
+\includegraphics[width=3 cm]{google-modern.png} & & \includegraphics[width=4 cm]{meraki.png} \\
+
+\\
+
+\includegraphics[width=3 cm]{viber.png} & & \includegraphics[width=2 cm]{adobe-logo.jpg} \\
+
+\end{tabular}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Limitations}
+
+\large
+
+\begin{itemize}
+
+\item Sprout wants to control all of the traffic on a queue.
+
+\begin{itemize}
+
+\item Cells generally have \textcolor{DarkBlue}{\textbf{per-user}} queues\ldots
+
+\item \ldots but Wi-Fi and wired networks usually don't.
+
+\end{itemize}
+
+\item[]
+
+\item What about when the cell link \emph{isn't} the bottleneck?
+
+\item[]
+
+\item Assumption that application always has data ready.
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Sprout's mark}
+
+\only<1>{\noindent \hspace{-.75 cm} \includegraphics[width=1.1\textwidth]{march2-9.pdf}
+
+}
+\only<2>{\noindent \hspace{-.75 cm} \includegraphics[width=1.1\textwidth]{march2-all.pdf}
+
+}
+
+\end{frame}
+
+\section{Remy}
+
+\begin{frame}
+\frametitle{Now that we have 40+ algorithms\ldots}
+
+\Large
+
+\begin{itemize}
+
+\item Sprout for cellular networks?
+
+\item Wireless-TCP for Wi-Fi?
+
+\item High-BDP-TCP for transoceanic links?
+
+\item Datacenter-TCP for datacenters?
+
+\item CoDel for cable modems?
+
+
+
+\item \textcolor{DarkGreen}{To-Be-Invented-TCP for tomorrow's networks?}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Status quo: rational choice of scheme is challenging}
+
+\begin{centering}
+\includegraphics[height=20 pt]{cubic.pdf}\hspace{8 pt}{\bf vs.}\hspace{8 pt}\includegraphics[height=20 pt]{compound.pdf}
+
+\end{centering}
+
+\ssline
+\ssline
+\ssline
+
+\begin{itemize}
+
+\Large
+
+\item Different goals?
+
+\item Different assumptions about network?
+
+\item One scheme just plain better?
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Networks constrained by a fuzzy idea of TCP's assumptions}
+
+\Large
+
+\begin{itemize}
+\item Mask stochastic loss
+\item Bufferbloat
+\item Mask out-of-order delivery
+\item No parallel/multipath routing
+\item[]
+\item[] {\it Advice for Internet Subnetwork Designers}\\ (RFC 3819) is 21,000 words!
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Status quo: apps hack around TCP}
+
+\Large
+
+\begin{itemize}
+\item Open lots of flows \hspace{1.9 cm} \only<2->{\includegraphics[width=0.5cm]{firefox.png} \hspace{0.001 cm} \includegraphics[width=0.5cm]{chrome-64.png} \hspace{0.001 cm} \includegraphics[width=0.5cm]{Internet_Explorer_10_logo.png} \hspace{0.02 cm} \includegraphics[width=0.5cm]{safari.jpg} \hspace{0.02 cm} \includegraphics[width=0.5cm]{mozilladino.png}}
+
+\item Goose slow start \only<3->{\hspace{2.18 cm} \raisebox{-0.6ex}{\includegraphics[height=14 pt]{Google_Logo_Old.PNG}} \raisebox{-.125 ex}{\includegraphics[height=10 pt]{mslogo.png}}}
+
+\item Add pacing \hspace{3.3 cm} \only<4->{\raisebox{-.4 ex}{\includegraphics[height=14 pt]{youtube.png}}}
+
+\item Give up and do it yourself
+
+\visible<5>{
+\small
+\hspace{5.95 cm}\begin{minipage}{3.5 cm}
+{\bf Chrome} \textcolor{DarkBlue}{(QUIC)} \\
+{\bf BitTorrent} \textcolor{DarkBlue}{($\mu$TP)} \\
+{\bf Mosh} \textcolor{DarkBlue}{(SSP)} \\
+{\bf Aspera} \textcolor{DarkBlue}{(fasp)} \\
+\end{minipage}
+}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Idea: computer-generated protocols}
+
+\Large Transport layer should adapt to \textbf{whatever}:
+
+\begin{itemize}
+\item network does \visible<2>{(\textbf{\textcolor{DarkBlue}{model}})}
+
+\item application wants \visible<2>{(\textbf{\textcolor{DarkGreen}{mission}})}
+
+\end{itemize}
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+\scriptsize
+
+KW and Hari Balakrishnan, \textbf{End-to-End Transmission Control by Modeling Uncertainty about the Network State}, in \textit{Proceedings of ACM HotNets 2011}, Cambridge, Mass., November 2011
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+KW and Hari Balakrishnan, \textbf{TCP ex Machina: Computer-Generated Congestion Control}, in \textit{Proceedings of ACM SIGCOMM 2013}, Hong Kong, China, August 2013
+
+\end{frame}
+
+\begin{frame}
+\frametitle{What we built}
+
+\colorbox{Bisque}{
+\begin{centering}
+\noindent \begin{tabular}{ll}
+\Large \textcolor{DarkRed}{\bf Remy}: & \Large a program that generates \\ & \Large congestion-control schemes offline
+\end{tabular}
+
+\end{centering}}
+
+\ssline
+\ssline
+
+\textcolor{DarkBlue}{\bf Input:}
+
+\begin{itemize}
+\item Assumptions about network (\textbf{\textcolor{DarkBlue}{model}})
+
+\item Application's objective (\textbf{\textcolor{DarkGreen}{mission}})
+\end{itemize}
+
+\textcolor{DarkBlue}{\bf Output:} CC algorithm for a TCP sender \hspace{0.177 cm}\textcolor{DarkBlue}{(RemyCC)}
+
+\ssline
+
+\textcolor{DarkBlue}{\bf Time:} hours to days
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The basic question of congestion control}
+
+\begin{centering}
+\fbox{
+\begin{minipage}{6 cm}
+\LARGE At this moment, do I:
+
+\begin{itemize}
+
+\item send a packet
+\item not send a packet?
+
+\end{itemize}
+
+\end{minipage}
+}
+
+\end{centering}
+
+\end{frame}
+
+%\begin{frame}
+%\frametitle{The goal}
+%
+%\Large
+%
+%\begin{itemize}
+%
+%\item Tradeoff between \textbf{efficiency} and \textbf{fairness}
+%
+%\item Tradeoff between \textbf{throughput} and \textbf{delay}
+%
+%\end{itemize}
+%
+%\end{frame}
+
+\begin{frame}
+\frametitle{Objectives of congestion control}
+
+\textbf{Maximize}
+
+\begin{itemize}
+
+\item \begin{minipage}{3.75 cm}
+\[\sum_i \log \left[ \textsf{throughput}_i \right]\]
+\end{minipage} \textsf{\textcolor{DarkBlue}{(proportionally fair throughput)}}
+
+\pause
+
+\item
+\begin{minipage}{3.75 cm}
+\begin{tabular}{l}
+\cellcolor{Bisque}\raisebox{0.75 cm}{\begin{minipage}{3.75 cm}
+\[\sum_i \log \left[ \frac{\textsf{throughput}_i}{\visible<3->{
+\textcolor{DarkBlue}{\big(}
+}\textsf{delay}_i\visible<3->{
+\textcolor{DarkBlue}{\big)^{\bm \delta}}}} \right]\]
+\end{minipage} \textsf{\textcolor{DarkBlue}{(proportionally fair throughput/delay)}}}
+\end{tabular}
+\end{minipage}
+
+\visible<4>{
+
+\item \begin{minipage}{3.75 cm}
+$\min_i \textsf{throughput}_i$
+\end{minipage} \textsf{\textcolor{DarkBlue}{(max-min throughput)}}
+}
+\end{itemize}
+
+\visible<4>{
+\textbf{Minimize}
+
+\begin{itemize}
+\item average flow completion time
+
+\item page load time
+
+\item tail completion time
+
+\end{itemize}
+}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Prior assumptions}
+
+\begin{itemize}
+
+\Large
+
+\item Model of network uncertainty
+
+\begin{itemize}
+\item Link speed distribution
+\item Delay distribution
+\end{itemize}
+
+\item Traffic model
+
+\begin{itemize}
+\item Web browsing, MapReduce, videoconferencing
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Dumbbell network}
+
+\only<1>{\noindent\includegraphics[width=\textwidth]{dumbbell-2.pdf}}\only<2>{\noindent\includegraphics[width=\textwidth]{dumbbell-1.pdf}}\only<3>{\noindent\includegraphics[width=\textwidth]{dumbbell.pdf}}
+
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Statement of the problem}
+%
+%\Large
+%
+%\begin{itemize}
+%
+%\item Endpoints have no control over routing
+%
+%\item Each sender only gets own receiver's acks
+%
+%\item Goal: \textbf{\textcolor{DarkBlue}{optimize expected value of objective}}
+%
+%\item[] \normalsize $\Rightarrow$ decentralized partially-observable Markov decision process
+%
+%\end{itemize}
+%
+%\end{frame}
+
+\begin{frame}
+\frametitle{Superrational congestion control}
+
+\begin{centering}
+\fbox{
+\begin{minipage}{6 cm}
+\LARGE At this moment,\textcolor{DarkBlue}{\bf *} do I:
+
+\begin{itemize}
+
+\item send a packet
+\item not send a packet?
+
+\end{itemize}
+
+\end{minipage}
+}
+
+\ssline
+\ssline
+\ssline
+
+\end{centering}
+
+\Large \noindent \hspace{-.5cm} \mbox{\textcolor{DarkBlue}{\textbf{*} Assuming every node is running the same algorithm.}}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Internet congestion control as a Dec-POMDP}
+
+\begin{itemize}
+
+\item[$I$:] independent endpoint computers
+
+\pause
+
+\item[$S$:] packets in net + whether each computer has data to send now
+
+\pause
+
+\item[$A_i$:] \{ send a packet, don't send a packet \}
+
+\pause
+
+\item[$T$:] simple networks are deterministic, with parameters drawn from a distribution. Flows arrive per a random process.
+
+\pause
+
+\item[$R$:] overall objective awarded at end of long run
+
+\pause
+
+\item[$\Omega$:] acknowledgements from corresponding receiver
+
+\pause
+
+\item[$O$:] deterministic
+
+\item[]
+
+\pause
+
+\item[] \textcolor{DarkGreen}{\textbf{Complexity in general:}} \textsc{NEXP}-complete
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Remy: search for super\textcolor{Black}{rat}ionality}
+
+\large
+
+\begin{itemize}
+
+\item Remy searches for the best congestion-control algorithm
+
+\item[]
+
+\item Optimizes expected objective over prior assumptions
+
+\item[]
+
+\item Makes tractable by \textcolor{DarkBlue}{limiting available state}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{A RemyCC tracks four congestion signals}
+
+\large
+
+\begin{centering}
+\noindent \hspace{-0.75 cm}\begin{tabular}{ll}
+\textcolor{DarkBlue}{$r\_ewma_\alpha$}: & long-term moving average of interval between acks \\
+
+\\
+
+\textcolor{DarkBlue}{$r\_ewma_\beta$}: & short-term moving average of interval between acks \\
+
+\\
+
+\textcolor{DarkBlue}{$s\_ewma$}: & \ldots between sender timestamps echoed in acks \\
+
+\\
+
+\textcolor{DarkBlue}{$rtt\_ratio$}: & ratio of last RTT to smallest RTT so far \\
+
+\end{tabular}
+
+\end{centering}
+\end{frame}
+
+\begin{frame}
+\frametitle{Why these congestion signals?}
+
+\Large
+
+\begin{itemize}
+
+\item Removing any of the four hurts
+
+\begin{itemize}
+\item $r\_ewma_\beta$ hurts the most
+\end{itemize}
+
+\item[]
+
+\item More signals increase search time
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{A RemyCC maps each state to an action}
+
+\Large
+
+\[\textsc{Rule}( \textcolor{DarkBlue}{r\_ewma_{\alpha\beta}}, \textcolor{DarkBlue}{s\_ewma}, \textcolor{DarkBlue}{rtt\_ratio} ) \rightarrow \langle \textcolor{Red}{m}, \textcolor{Red}{b}, \textcolor{Red}{\tau} \rangle \]
+
+\ssline
+\ssline
+
+\begin{tabular}{ll}
+
+\textcolor{Red}{$m$} & Multiple to congestion window \\
+
+\textcolor{Red}{$b$} & Increment to congestion window \\
+
+\textcolor{Red}{$\tau$} & Minimum interval between two outgoing packets \\
+
+\end{tabular}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Runtime for a RemyCC}
+
+\large
+
+\textbf{On ack:}
+
+\begin{itemize}
+\item $\langle \textcolor{Red}{m}, \textcolor{Red}{b}, \textcolor{Red}{\tau}\rangle \leftarrow \textsc{Rule}( \textcolor{DarkBlue}{r\_ewma_{\alpha\beta}}, \textcolor{DarkBlue}{s\_ewma}, \textcolor{DarkBlue}{rtt\_ratio} )$
+
+\item $\texttt{cwnd} \leftarrow \textcolor{Red}{m} \cdot \texttt{cwnd} + \textcolor{Red}{b}$
+\end{itemize}
+
+\textbf{Send packet if:}
+
+\begin{itemize}
+\item $\texttt{cwnd} > \texttt{FlightSize}$, and
+
+\item last packet sent $> \textcolor{Red}{\tau}$ ago
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Remy's job}
+
+\Large
+
+\colorbox{Bisque}{
+\begin{minipage}{\textwidth}
+Find piecewise-continuous \textsc{Rule}() that optimizes \\ expected value of objective function.
+
+\end{minipage}}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Remy example: 2D state space}
+
+\large
+
+\textbf{On ack:}
+
+\vspace{\baselineskip}
+
+$\langle \textcolor{Red}{m}, \textcolor{Red}{b}, \textcolor{Red}{\tau}\rangle \leftarrow \textsc{Rule}( s\_ewma, r\_ewma_{\alpha},\begin{tabular}{l}\only<2>{\cellcolor{DarkBlue}}\textcolor{DarkBlue}{$r\_ewma_{\beta}, rtt\_ratio$}\end{tabular} )$
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Remy example: \textbf{\textcolor{DarkBlue}{model}}}
+
+\large
+
+\begin{tabular}{llll}
+\bf Quantity & & \bf Distribution & \bf Units \\
+
+\hline \\
+
+Link speed & & Uniform(10, 20) & Mbps \\
+
+\\
+
+RTT & & Uniform(100, 200) & ms \\
+
+\\
+
+$n$ & & Uniform(1, 16) \\
+
+\\
+
+``On'' process & & $\mathrm{exp}[\mu = 5]$ & seconds \\
+
+``Off'' process & & same \\
+
+\end{tabular}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Remy example: \textbf{\textcolor{DarkGreen}{mission}}}
+
+\LARGE
+
+\[\sum_i \log \left[ \frac{\textsf{throughput}_i}{\textsf{delay}_i} \right]\]
+
+\end{frame}
+
+\input{optimize.tex}
+
+\begin{frame}
+\frametitle{Evaluation in ns-2}
+
+\begin{itemize}
+
+\item End-to-end comparators: \textcolor{Red}{NewReno, Cubic, Compound, Vegas}
+
+\item In-net comparators: \textcolor{DarkGreen}{Cubic-over-sfqCoDel, XCP}
+
+\item Simulation setup published for replication
+
+\end{itemize}
+
+\begin{centering}
+\includegraphics[width=9 cm]{reproducethis.png}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Scenario 1: fixed-rate network, homogenous senders}
+
+\includegraphics[width=\textwidth]{dumbbell.pdf}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Scenario 1: details}
+
+\begin{tabular}{lllll}
+\bf Quantity & & \bf Simulation parameter & \bf Remy assumptions \\
+
+\hline Link speed & & 15~Mbps & Uniform(10, 20)~Mbps \\
+
+RTT & & 150~ms & Uniform(100, 200)~ms \\
+
+$n$ & & 8 & Uniform(1, 16) \\
+
+``On'' process & & $\mathrm{exp}[\mu = 100]\,\textbf{\textcolor{DarkBlue}{kB}}$ & $\mathrm{exp}[\mu = 5]\,\textbf{\textcolor{DarkBlue}{s}}$ \\
+
+``Off'' process & & $\mathrm{exp}\left[\mu = \textcolor{DarkBlue}{\bm {\frac{1}{2}}}\right]\,\textsf{s}$ & $\mathrm{exp}[\mu = \textcolor{DarkBlue}{\bm 5} ]\,\textsf{s}$ \\
+
+\end{tabular}
+
+\ssline
+\ssline
+
+\textbf{Remy objective:} \[\sum_i \log \left[ \frac{\textsf{throughput}_i}{\big(\textsf{delay}_i\big)^{\textcolor{DarkBlue}{{\bm \delta}}}} \right]\]
+
+\[\textcolor{DarkBlue}{{\bm \delta}} \in \bigg\{ \frac{1}{10}, 1, 10 \bigg\} \]
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Scenario 1: throughput-delay plot}
+
+\begin{centering}
+\only<1>{\includegraphics[width=8.5 cm]{eth8-annotated-11.pdf}}\only<2>{\includegraphics[width=8.5 cm]{eth8-annotated-10.pdf}}\only<3>{\includegraphics[width=8.5 cm]{eth8-annotated-9.pdf}}\only<4>{\includegraphics[width=8.5 cm]{eth8-annotated-8.pdf}}\only<5>{\includegraphics[width=8.5 cm]{eth8-annotated-7.pdf}}\only<6>{\includegraphics[width=8.5 cm]{eth8-annotated-6.pdf}}\only<7>{\includegraphics[width=8.5 cm]{eth8-annotated-7.pdf}}\only<8>{\includegraphics[width=8.5 cm]{eth8-annotated-5.pdf}}\only<9>{\includegraphics[width=8.5 cm]{eth8-annotated-4.pdf}}\only<10>{\includegraphics[width=8.5 cm]{eth8-annotated-3.pdf}}\only<11>{\includegraphics[width=8.5 cm]{eth8-annotated-1.pdf}}\only<12>{\includegraphics[width=8.5 cm]{eth8-annotated.pdf}}
+
+\end{centering}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Scenario 2: $n = 12$, heavy-tailed flow lengths}
+%
+%\begin{centering}
+%\includegraphics[width=8.5 cm]{eth12-final-flowcdf.pdf}
+%
+%\end{centering}
+%
+%\end{frame}
+
+\begin{frame}
+\frametitle{Scenario 2: Verizon LTE, $n = 8$}
+
+\begin{centering}
+\includegraphics[width=8.5 cm]{vzw-8-final.pdf}
+
+\end{centering}
+\end{frame}
+
+\begin{frame}
+\frametitle{Remy as an instrument to study network science}
+
+\Large
+
+\begin{quote}
+\color{DarkBlue} \textit{From the perspective of a network endpoint, \bf what matters?}
+
+\end{quote}
+
+\vspace{\baselineskip}
+
+\begin{quote}
+\color{DarkGreen} \textit{How difficult is it to learn a good protocol, given an \textbf{imperfect} model of the network?}
+
+\end{quote}
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+\scriptsize
+
+Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
+\textbf{An Experimental Study of the Learnability of Congestion
+  Control}, \textit{in submission}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{What if the model is imperfect?}
+
+\large
+
+\begin{centering}
+\textcolor{DarkBlue}{\only<1>{One bottleneck}\only<2>{Two bottlenecks}}
+
+\end{centering}
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+\only<1>{\includegraphics[width=\textwidth]{onelink.pdf}}\only<2>{\includegraphics[width=\textwidth]{twolink.pdf}}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{centering}
+\frametitle{The cost of simplicity}
+
+\noindent \only<1>{\includegraphics[width=3.4 in]{multilink-1.pdf}}\only<2>{\includegraphics[width=3.4 in]{multilink-2.pdf}}\only<3>{\includegraphics[width=3.4 in]{multilink-3.pdf}}\only<4>{\includegraphics[width=3.4 in]{multilink-4.pdf}}\only<5>{\includegraphics[width=3.4 in]{multilink-5.pdf}}\only<6>{\includegraphics[width=3.4 in]{multilink-all.pdf}}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The cost of generality}
+
+\begin{centering}
+
+\noindent \only<1>{\includegraphics[width=3.1 in]{oprange-1.pdf}}\only<2>{\includegraphics[width=3.1 in]{oprange-2.pdf}}\only<3>{\includegraphics[width=3.1 in]{oprange-3.pdf}}\only<4>{\includegraphics[width=3.1 in]{oprange-4.pdf}}\only<5>{\includegraphics[width=3.1 in]{oprange-5.pdf}}\only<6>{\includegraphics[width=3.1 in]{oprange-6.pdf}}\only<7>{\includegraphics[width=3.1 in]{oprange-all.pdf}}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{TCP-compatibility: it hurts when TCP is absent}
+
+\begin{centering}
+
+\noindent \only<1>{\includegraphics[width=3.3 in]{homo-1.pdf}}\only<2>{\includegraphics[width=3.3 in]{homo-2.pdf}}\only<3>{\includegraphics[width=3.3 in]{homo-3.pdf}}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{TCP-compatibility helps when TCP cross-traffic is present}
+
+\begin{centering}
+
+\noindent \only<1>{\includegraphics[width=3.1 in]{hetero-1.pdf}}\only<2>{\includegraphics[width=3.1 in]{hetero-2.pdf}}\only<3>{\includegraphics[width=3.1 in]{hetero-3.pdf}}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Ongoing work}
+
+\begin{itemize}
+
+\item What happens as the model continues to become more general?
+
+\item[]
+
+\item Does performance revert to today's TCP?
+
+\item[]
+
+\item How do we characterize the robustness to unforeseen evolution?
+
+\item[]
+
+\item In-net and end-to-end algorithms working together
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Systems ex Machina}
+
+\begin{itemize}
+
+\item In any systems design problem, automating the process means formalizing our intuition.
+
+\item[]
+
+\item What do we need to measure to confidently deploy a new system?
+
+\item[]
+
+\item \textcolor{DarkBlue}{``If this system is the answer, what's the question?''}
+
+\end{itemize}
+
+\end{frame}
+
+\section{Other work}
+
+\begin{frame}
+\frametitle{Mosh}
+
+\large
+
+\begin{itemize}
+
+\item Mobile shell based on \textbf{app-centric transport}
+
+\item Released March 2012
+
+\item 600,000+ users on Linux, Mac, Windows, Android, ChromeOS, BSD, AIX, HP-UX, Solaris\ldots
+
+\item[]
+
+\item \textcolor{DarkBlue}{Model:} ANSI terminal screen state
+
+\item \textcolor{DarkGreen}{Mission:} Synchronize \emph{most recent} state asap
+
+\end{itemize}
+
+\vspace{7 pt}
+
+\begin{centering}
+
+\includegraphics[width=6 cm]{mosh.png}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Mosh---next steps}
+
+\begin{itemize}
+
+\item Mosh clients and servers ping each other every 3 seconds
+
+\item[]
+
+\item Next release of Mosh will include opt-in reporting
+
+\item[]
+
+\item[$\rightarrow$] real-time end-to-end Internet latency and loss model
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Alfalfa}
+
+\Large
+
+\begin{itemize}
+
+\item Streaming video is still based on \textbf{streams}
+
+\item[]
+
+\item Much work on: buffering, switching
+
+\item[]
+
+\item In practice, still room for improvement
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Alfalfa}
+
+\large
+
+\begin{itemize}
+
+\item Capture the \textit{entire} state of a VP8 decoder
+
+\item[]
+
+\item ``Frames'' are functions that operate on state
+
+\item[]
+
+\item Player chooses a path of frames from start to finish
+
+\vspace{\baselineskip}
+
+\item \textcolor{DarkBlue}{Model:} VP8 decoder state machine
+
+\item \textcolor{DarkGreen}{Mission:} 
+
+\begin{itemize}
+\item Quality
+\item Quick startup
+\item No stalls, or
+\item Fast seeks
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Transport Architectures for an Evolving Internet}
+
+\Large
+
+\begin{itemize}
+
+\item[Sprout] 2--4$\times$ the throughput and 7--9$\times$ less delay over cellular networks
+
+\item[Remy] computer-generated congestion control
+
+\item[Mosh] mobile shell app
+
+\item[Alfalfa] network video that optimizes an objective
+
+\item[] \hspace{4 cm} \footnotesize \it \ldots each with an explicit \textcolor{DarkBlue}{model} and \textcolor{DarkGreen}{mission}
+
+\end{itemize}
+
+\vspace{\baselineskip}
+
+\begin{centering}
+keithw@mit.edu
+
+\vspace{7 pt}
+
+\textcolor{DarkBlue}{http://mit.edu/keithw}
+
+\end{centering}
+
+\end{frame}
+
+\end{document}
