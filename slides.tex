@@ -13,6 +13,8 @@
 \institute{MIT Computer Science and Artificial Intelligence Laboratory}
 \date{March 10, 2014}
 
+\beamertemplatenavigationsymbolsempty
+
 \begin{document}
 
 \begin{frame}[plain]
@@ -31,6 +33,8 @@
 \end{centering}
 
 \end{frame}
+
+\institute{}
 
 \section{Introduction}
 
@@ -114,29 +118,62 @@ In 20 years, computer networks have seen dramatic change:
 \end{frame}
 
 \begin{frame}
-\frametitle{Our approach}
+\frametitle{Declarative design}
 
 \Large
 
 \begin{centering}
 
-\fbox{Protocols with a \textcolor{DarkBlue}{\bf model} and a \textcolor{DarkGreen}{\bf mission}.}
+\fbox{Systems with a \textcolor{DarkBlue}{\bf model} and a \textcolor{DarkGreen}{\bf mission}.}
+
+\vspace{\baselineskip}
 
 \end{centering}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Explicitness in protocol design}
+\frametitle{Explicitness in systems design}
 
 \large
 
-\noindent \textcolor{DarkBlue}{\bf Model}: explicit statement of assumptions about the network
+\noindent \textcolor{DarkBlue}{\bf Model}: explicit statement of assumptions about the problem
 
 \vspace{\baselineskip}
 \vspace{\baselineskip}
 
 \textcolor{DarkGreen}{\bf Mission}: objective that the application wants
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Contributions}
+
+\begin{itemize}
+
+\item[Sprout:] Protocol for interactive apps on cellular networks
+
+\visible<2->{{\fbox{\tiny\textbf{\textcolor{DarkBlue}{model}} = flicker noise, \textbf{\textcolor{DarkGreen}{mission}} = max throughput with delay $<$ 0.1 s}}}
+
+\item[]
+
+\item[Remy:] Computer-generated protocol design
+
+\visible<3->{{\fbox{\tiny\textbf{\textcolor{DarkBlue}{model}} = user-specified, \textbf{\textcolor{DarkGreen}{mission}} = user-specified}}}
+
+\item[]
+
+\item[Mosh:] Remote terminal app
+
+\visible<4->{{\fbox{\tiny\textbf{\textcolor{DarkBlue}{model}} = ANSI terminal emulator, \textbf{\textcolor{DarkGreen}{mission}} = convey latest frame}}}
+
+\item[]
+
+\item[Alfalfa:] Video streaming app
+
+\visible<5->{{\fbox{\tiny\textbf{\textcolor{DarkBlue}{model}} = VP8 decoder, \textbf{\textcolor{DarkGreen}{mission}} = quality vs.~startup vs.~stalls}}}
+
+\end{itemize}
 
 \end{frame}
 
@@ -162,6 +199,19 @@ In 20 years, computer networks have seen dramatic change:
 
 {\small
 \def\svgwidth{\columnwidth}\input{allcapacity.pdf_tex}
+}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Verizon LTE delay}
+
+\begin{centering}
+
+{\small
+\def\svgwidth{0.8 \columnwidth}\input{pings.pdf_tex}
 }
 
 \end{centering}
@@ -210,7 +260,7 @@ In 20 years, computer networks have seen dramatic change:
 \frametitle{What's wrong?}
 
 \begin{itemize}
-\item Exiting schemes \textbf{react} to congestion signals.
+\item Existing schemes \textbf{react} to congestion signals.
 
 \begin{itemize}
 \item Packet loss.
@@ -241,7 +291,7 @@ In 20 years, computer networks have seen dramatic change:
 
 \scriptsize
 
-KW, Anirudh Sivaraman, and Hari Balakrishnan, \textbf{Stochastic Forecasts Achieve High Throughput and Low Delay over Cellular Networks}, in \textit{Proceedings of USENIX NSDI 2013}, Lombard, Ill., April 2013
+KW, Anirudh Sivaraman, and Hari Balakrishnan, \textbf{Stochastic Forecasts Achieve High Throughput and Low Delay over Cellular Networks}, \textit{USENIX NSDI 2013}
 
 \end{frame}
 
@@ -251,7 +301,9 @@ KW, Anirudh Sivaraman, and Hari Balakrishnan, \textbf{Stochastic Forecasts Achie
 
 \large
 
-\item \textbf{Infer} link speed from arrivals
+\item \textbf{Model} variation in link speed
+
+\item \textbf{Infer} current link speed
 
 \item \textbf{Predict} future link speed
 
@@ -272,7 +324,7 @@ KW, Anirudh Sivaraman, and Hari Balakrishnan, \textbf{Stochastic Forecasts Achie
 \end{frame}
 
 \begin{frame}
-\frametitle{\textbf{Infer}: link speed from flicker noise process}
+\frametitle{\textbf{Model}: packet deliveries looks like flicker noise}
 
 \begin{centering}
 
@@ -285,24 +337,15 @@ KW, Anirudh Sivaraman, and Hari Balakrishnan, \textbf{Stochastic Forecasts Achie
 \end{frame}
 
 \begin{frame}
-\frametitle{\textbf{Predict}: future link speed}
+\frametitle{\textbf{Model}: average rate looks like random walk}
 
-\large
+\begin{centering}
 
-\begin{itemize}
-\item \textcolor{DarkBlue}{\bf Model} evolution of speed as random walk.
+{\small
+\def\svgwidth{\columnwidth}\input{allcapacity.pdf_tex}
+}
 
-\begin{itemize}
-\item (Brownian motion)
-\end{itemize}
-
-\item Cautious forecast: 5th percentile cumulative packets
-
-\item Receiver makes forecast; sends back to sender
-
-%\item Almost all precalculated
-
-\end{itemize}
+\end{centering}
 
 \end{frame}
 
@@ -324,7 +367,7 @@ Volatility $\sigma$: fixed @ & $200~\frac{\textrm{pkts}/s}{\sqrt{s}}$ \\
 
 Expected outage time $1/\lambda_z$: & $1~s$ \\
 
-Tick length: & $20~ms$ \\
+Tick length ($\tau$): & $20~ms$ \\
 
 Forecast length: & $160~ms$ \\
 
@@ -340,6 +383,45 @@ All source code was \bf{\textcolor{DarkGreen}{frozen before data collection bega
 \end{frame}
 
 \begin{frame}
+\frametitle{\textbf{Infer}: current link speed}
+
+\Large
+
+\begin{itemize}
+
+\item Observe number of bytes received every $\tau$
+
+\item[]
+
+\item Update probability distribution of $\lambda$
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{\textbf{Predict}: future link speed}
+
+\large
+
+\begin{itemize}
+\item Evolve model forward
+
+\item[]
+
+\item Cautious forecast: 5th percentile cumulative packets
+
+\item[]
+
+\item Receiver makes forecast; piggybacks on acknowledgment
+
+%\item Almost all precalculated
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
 \frametitle{\textbf{Control}: fill up 100~ms forecast window}
 \begin{centering}
 \only<1>{\includegraphics[width=0.9\columnwidth]{forecast-minus6.pdf}}\only<2>{\includegraphics[width=0.9\columnwidth]{forecast-minus5.pdf}}\only<3>{\includegraphics[width=0.9\columnwidth]{forecast-minus4.pdf}}\only<4>{\includegraphics[width=0.9\columnwidth]{forecast-minus3.pdf}}\only<5>{\includegraphics[width=0.9\columnwidth]{forecast-minus2.pdf}}\only<6>{\includegraphics[width=0.9\columnwidth]{forecast-minus1.pdf}}\only<7>{\includegraphics[width=0.9\columnwidth]{forecast-final.pdf}}
@@ -348,11 +430,20 @@ All source code was \bf{\textcolor{DarkGreen}{frozen before data collection bega
 \end{frame}
 
 \begin{frame}
-\only<1>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus4.pdf_tex}}\only<2>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus3.pdf_tex}}\only<3>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus2.pdf_tex}}\only<4>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus1.pdf_tex}}\only<5>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink.pdf_tex}}\only<6>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Uplink.pdf_tex}}\only<7>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Verizon3G1xEV-DO-Downlink.pdf_tex}}\only<8>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Verizon3G1xEV-DO-Uplink.pdf_tex}}\only<9>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{ATTLTE-Downlink.pdf_tex}}\only<10>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{ATTLTE-Uplink.pdf_tex}}\only<11>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{T-Mobile3GUMTS-Downlink.pdf_tex}}\only<12>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{T-Mobile3GUMTS-Uplink.pdf_tex}}
+\frametitle{Sprout's results}
+
 \end{frame}
 
 \begin{frame}
-\frametitle{Overall results}
+\only<1>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus4.pdf_tex}}\only<2>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus3.pdf_tex}}\only<3>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus2.pdf_tex}}\only<4>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus1.pdf_tex}}\only<5>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink.pdf_tex}}\only<6>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Uplink.pdf_tex}}%\only<7>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Verizon3G1xEV-DO-Downlink.pdf_tex}}\only<8>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Verizon3G1xEV-DO-Uplink.pdf_tex}}\only<9>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{ATTLTE-Downlink.pdf_tex}}\only<10>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{ATTLTE-Uplink.pdf_tex}}\only<11>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{T-Mobile3GUMTS-Downlink.pdf_tex}}\only<12>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{T-Mobile3GUMTS-Uplink.pdf_tex}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Overall results on 8 links}
+
+Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
+
+\vspace{\baselineskip}
 
 \begin{tabular}{|l|c|c|}
 \hline
@@ -380,25 +471,25 @@ All source code was \bf{\textcolor{DarkGreen}{frozen before data collection bega
 \def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Codels.pdf_tex}
 \end{frame}
 
-\begin{frame}
-\frametitle{Replication by Stanford students (February--March 2013)}
-
-\large
-
-\begin{itemize}
-\item Alterman \& Quach reproduced part of Sprout paper
-
-\item[]
-
-\item {\scriptsize\texttt{http://ReproducingNetworkResearch.wordpress.com/2013/03/12/1216/}}
-
-\item[]
-
-\item Won best project award in Stanford networking class
-
-\end{itemize}
-
-\end{frame}
+%\begin{frame}
+%\frametitle{Replication by Stanford students (February--March 2013)}
+%
+%\large
+%
+%\begin{itemize}
+%\item Alterman \& Quach reproduced part of Sprout paper
+%
+%\item[]
+%
+%\item {\scriptsize\texttt{http://ReproducingNetworkResearch.wordpress.com/2013/03/12/1216/}}
+%
+%\item[]
+%
+%\item Won best project award in Stanford networking class
+%
+%\end{itemize}
+%
+%\end{frame}
 
 \begin{frame}
 \frametitle{M.I.T.~6.829 contest (March--April 2013)}
@@ -407,6 +498,8 @@ All source code was \bf{\textcolor{DarkGreen}{frozen before data collection bega
 \item Turnkey network emulator, evaluation
 
 \item Sender, receiver run in Linux containers
+
+\item \textbf{\textcolor{DarkGreen}{Mission}}: maximize throughput/delay
 
 \item 4th prize: \$20
 
@@ -417,6 +510,14 @@ All source code was \bf{\textcolor{DarkGreen}{frozen before data collection bega
 \item (If beat Sprout) 1st prize: \pause {\color{DarkBlue}{\bf Co-authorship on future paper}}
 
 \end{itemize}
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+\visible<3>{\scriptsize Anirudh Sivaraman, KW, Pauline Varley, Somak
+  Das, Joshua Ma, Ameesh Goyal, Jo\~{a}o Batalha, and Hari Balakrishnan,
+  \textbf{Protocol Design Contests}, \textit{in submission}}
 
 \end{frame}
 
@@ -457,7 +558,7 @@ All source code was \bf{\textcolor{DarkGreen}{frozen before data collection bega
 
 \includegraphics[width=4 cm]{screenhero.png} & & \includegraphics[width=4 cm]{highfive.png} \\
 
-\includegraphics[width=3 cm]{google-modern.png} & & \includegraphics[width=4 cm]{meraki.png} \\
+\raisebox{0.8 ex}{\includegraphics[width=3 cm]{Google_Logo_Old.PNG}} & & \includegraphics[width=4 cm]{meraki.png} \\
 
 \\
 
@@ -490,7 +591,7 @@ All source code was \bf{\textcolor{DarkGreen}{frozen before data collection bega
 
 \item[]
 
-\item Assumption that application always has data ready.
+\item Assumption: application always has data to send
 
 \end{itemize}
 
@@ -529,7 +630,7 @@ All source code was \bf{\textcolor{DarkGreen}{frozen before data collection bega
 
 
 
-\item \textcolor{DarkGreen}{To-Be-Invented-TCP for tomorrow's networks?}
+\item \textcolor{DarkGreen}{\bf TBA-TCP for tomorrow's networks?}
 
 \end{itemize}
 
@@ -551,7 +652,7 @@ All source code was \bf{\textcolor{DarkGreen}{frozen before data collection bega
 
 \Large
 
-\item Different goals?
+\item Different missions?
 
 \item Different assumptions about network?
 
@@ -622,12 +723,12 @@ All source code was \bf{\textcolor{DarkGreen}{frozen before data collection bega
 
 \scriptsize
 
-KW and Hari Balakrishnan, \textbf{End-to-End Transmission Control by Modeling Uncertainty about the Network State}, in \textit{Proceedings of ACM HotNets 2011}, Cambridge, Mass., November 2011
+KW and Hari Balakrishnan, \textbf{End-to-End Transmission Control by Modeling Uncertainty about the Network State}, \textit{HotNets 2011}
 
 \vspace{\baselineskip}
 \vspace{\baselineskip}
 
-KW and Hari Balakrishnan, \textbf{TCP ex Machina: Computer-Generated Congestion Control}, in \textit{Proceedings of ACM SIGCOMM 2013}, Hong Kong, China, August 2013
+KW and Hari Balakrishnan, \textbf{TCP ex Machina: Computer-Generated Congestion Control}, \textit{SIGCOMM 2013}
 
 \end{frame}
 
@@ -648,7 +749,7 @@ KW and Hari Balakrishnan, \textbf{TCP ex Machina: Computer-Generated Congestion 
 \textcolor{DarkBlue}{\bf Input:}
 
 \begin{itemize}
-\item Assumptions about network (\textbf{\textcolor{DarkBlue}{model}})
+\item Assumptions about network and workload (\textbf{\textcolor{DarkBlue}{model}})
 
 \item Application's objective (\textbf{\textcolor{DarkGreen}{mission}})
 \end{itemize}
@@ -699,7 +800,7 @@ KW and Hari Balakrishnan, \textbf{TCP ex Machina: Computer-Generated Congestion 
 %\end{frame}
 
 \begin{frame}
-\frametitle{Objectives of congestion control}
+\frametitle{\textbf{\textcolor{DarkGreen}{Missions}} of congestion control}
 
 \textbf{Maximize}
 
@@ -747,23 +848,27 @@ $\min_i \textsf{throughput}_i$
 \end{frame}
 
 \begin{frame}
-\frametitle{Prior assumptions}
+\frametitle{Encoding the designer's prior assumptions}
 
 \begin{itemize}
 
 \Large
 
-\item Model of network uncertainty
+\item \textcolor{DarkBlue}{\bf Model} of network uncertainty
 
 \begin{itemize}
 \item Link speed distribution
 \item Delay distribution
+\item Topology distribution
 \end{itemize}
 
-\item Traffic model
+\item \textcolor{DarkBlue}{\bf Model} of workload
 
 \begin{itemize}
-\item Web browsing, MapReduce, videoconferencing
+\item Web browsing
+\item MapReduce
+\item videoconferencing
+\item streaming video (YouTube/Netflix)
 \end{itemize}
 
 \end{itemize}
@@ -797,12 +902,12 @@ $\min_i \textsf{throughput}_i$
 %\end{frame}
 
 \begin{frame}
-\frametitle{Superrational congestion control}
+\frametitle{Super\textcolor{Black}{rat}ional congestion control}
 
 \begin{centering}
 \fbox{
 \begin{minipage}{6 cm}
-\LARGE At this moment,\textcolor{DarkBlue}{\bf *} do I:
+\LARGE At this moment,\visible<1->{\textcolor{DarkBlue}{\bf *}} do I:
 
 \begin{itemize}
 
@@ -820,7 +925,7 @@ $\min_i \textsf{throughput}_i$
 
 \end{centering}
 
-\Large \noindent \hspace{-.5cm} \mbox{\textcolor{DarkBlue}{\textbf{*} Assuming every node is running the same algorithm.}}
+\visible<2->{\Large \noindent \hspace{-.5cm} \mbox{\textcolor{DarkBlue}{\textbf{*} Assuming every node is running the same algorithm.}}}
 
 \end{frame}
 
@@ -866,21 +971,17 @@ $\min_i \textsf{throughput}_i$
 \end{frame}
 
 \begin{frame}
-\frametitle{Remy: search for super\textcolor{Black}{rat}ionality}
+\frametitle{Remy: tractable search for best policy}
 
 \large
 
 \begin{itemize}
 
-\item Remy searches for the best congestion-control algorithm
+\item Best decision given all history: not tractable
 
 \item[]
 
-\item Optimizes expected objective over prior assumptions
-
-\item[]
-
-\item Makes tractable by \textcolor{DarkBlue}{limiting available state}
+\item Instead, remember only \textbf{\textcolor{DarkRed}{a summary of history}}
 
 \end{itemize}
 
@@ -891,25 +992,32 @@ $\min_i \textsf{throughput}_i$
 
 \large
 
-\begin{centering}
-\noindent \hspace{-0.75 cm}\begin{tabular}{ll}
-\textcolor{DarkBlue}{$r\_ewma_\alpha$}: & long-term moving average of interval between acks \\
+\hspace{0.5 cm}\begin{minipage}{10.0 cm}
+\begin{itemize}
 
-\\
+\item[$r\_ewma_\alpha$:] \textbf{short-term} moving average of interval between acks
 
-\textcolor{DarkBlue}{$r\_ewma_\beta$}: & short-term moving average of interval between acks \\
+\textcolor{Red}{\textit{``How fast are packets arriving (now)?''}}
 
-\\
+\item[$r\_ewma_\beta$:] \textbf{long-term} moving average of same
 
-\textcolor{DarkBlue}{$s\_ewma$}: & \ldots between sender timestamps echoed in acks \\
+\textcolor{Red}{\textit{``How fast are packets arriving (smoothed)?''}}
 
-\\
+\item[]
 
-\textcolor{DarkBlue}{$rtt\_ratio$}: & ratio of last RTT to smallest RTT so far \\
+\item[$s\_ewma$:] moving average of interval between acked timestamps
 
-\end{tabular}
+\textcolor{Red}{\textit{``How fast was I sending?''}}
 
-\end{centering}
+\item[]
+
+\item[$rtt\_ratio$:] ratio of last RTT to smallest RTT so far
+
+\textcolor{Red}{\textit{``How long is the queue?''}}
+
+\end{itemize}
+\end{minipage}
+
 \end{frame}
 
 \begin{frame}
@@ -929,6 +1037,10 @@ $\min_i \textsf{throughput}_i$
 
 \item More signals increase search time
 
+\item[]
+
+\item Other signals might help on other networks
+
 \end{itemize}
 
 \end{frame}
@@ -938,7 +1050,7 @@ $\min_i \textsf{throughput}_i$
 
 \Large
 
-\[\textsc{Rule}( \textcolor{DarkBlue}{r\_ewma_{\alpha\beta}}, \textcolor{DarkBlue}{s\_ewma}, \textcolor{DarkBlue}{rtt\_ratio} ) \rightarrow \langle \textcolor{Red}{m}, \textcolor{Red}{b}, \textcolor{Red}{\tau} \rangle \]
+\[\textsc{RemyCC}( \textcolor{DarkBlue}{r\_ewma_{\alpha\beta}}, \textcolor{DarkBlue}{s\_ewma}, \textcolor{DarkBlue}{rtt\_ratio} ) \rightarrow \langle \textcolor{Red}{m}, \textcolor{Red}{b}, \textcolor{Red}{\tau} \rangle \]
 
 \ssline
 \ssline
@@ -963,7 +1075,7 @@ $\min_i \textsf{throughput}_i$
 \textbf{On ack:}
 
 \begin{itemize}
-\item $\langle \textcolor{Red}{m}, \textcolor{Red}{b}, \textcolor{Red}{\tau}\rangle \leftarrow \textsc{Rule}( \textcolor{DarkBlue}{r\_ewma_{\alpha\beta}}, \textcolor{DarkBlue}{s\_ewma}, \textcolor{DarkBlue}{rtt\_ratio} )$
+\item $\langle \textcolor{Red}{m}, \textcolor{Red}{b}, \textcolor{Red}{\tau}\rangle \leftarrow \textsc{RemyCC}( \textcolor{DarkBlue}{r\_ewma_{\alpha\beta}}, \textcolor{DarkBlue}{s\_ewma}, \textcolor{DarkBlue}{rtt\_ratio} )$
 
 \item $\texttt{cwnd} \leftarrow \textcolor{Red}{m} \cdot \texttt{cwnd} + \textcolor{Red}{b}$
 \end{itemize}
@@ -985,7 +1097,7 @@ $\min_i \textsf{throughput}_i$
 
 \colorbox{Bisque}{
 \begin{minipage}{\textwidth}
-Find piecewise-continuous \textsc{Rule}() that optimizes \\ expected value of objective function.
+Find piecewise-continuous \textsc{RemyCC}() that \\ optimizes expected value of objective function
 
 \end{minipage}}
 
@@ -1000,7 +1112,7 @@ Find piecewise-continuous \textsc{Rule}() that optimizes \\ expected value of ob
 
 \vspace{\baselineskip}
 
-$\langle \textcolor{Red}{m}, \textcolor{Red}{b}, \textcolor{Red}{\tau}\rangle \leftarrow \textsc{Rule}( s\_ewma, r\_ewma_{\alpha},\begin{tabular}{l}\only<2>{\cellcolor{DarkBlue}}\textcolor{DarkBlue}{$r\_ewma_{\beta}, rtt\_ratio$}\end{tabular} )$
+$\langle \textcolor{Red}{m}, \textcolor{Red}{b}, \textcolor{Red}{\tau}\rangle \leftarrow \textsc{\footnotesize RemyCC}( s\_ewma, r\_ewma_{\alpha},\begin{tabular}{l}\only<2>{\cellcolor{DarkBlue}}\textcolor{DarkBlue}{$r\_ewma_{\beta}, rtt\_ratio$}\end{tabular} )$
 
 \end{frame}
 
@@ -1156,7 +1268,40 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 \end{frame}
 
 \begin{frame}
-\frametitle{What if the model is imperfect?}
+\frametitle{RemyCC competing against itself}
+
+\begin{centering}
+
+\noindent \only<1>{\includegraphics[width=3.3 in]{homo-1.pdf}}\only<2>{\includegraphics[width=3.3 in]{homo-2.pdf}}\only<3>{\includegraphics[width=3.3 in]{homo-3.pdf}}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{RemyCC competing against TCP NewReno}
+
+\begin{centering}
+
+\noindent \only<1>{\includegraphics[width=3.1 in]{hetero-1.pdf}}\only<2>{\includegraphics[width=3.1 in]{hetero-2.pdf}}\only<3>{\includegraphics[width=3.1 in]{hetero-3.pdf}}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{The cost of generality}
+
+\begin{centering}
+
+\noindent \only<1>{\includegraphics[width=3.1 in]{oprange-1.pdf}}\only<2>{\includegraphics[width=3.1 in]{oprange-2.pdf}}\only<3>{\includegraphics[width=3.1 in]{oprange-3.pdf}}\only<4>{\includegraphics[width=3.1 in]{oprange-4.pdf}}\only<5>{\includegraphics[width=3.1 in]{oprange-5.pdf}}\only<6>{\includegraphics[width=3.1 in]{oprange-6.pdf}}\only<7>{\includegraphics[width=3.1 in]{oprange-all.pdf}}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{When the model is wrong about the topology}
 
 \large
 
@@ -1175,89 +1320,36 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 \begin{frame}
 
 \begin{centering}
-\frametitle{The cost of simplicity}
+\frametitle{When the model is wrong about the topology}
 
-\noindent \only<1>{\includegraphics[width=3.4 in]{multilink-1.pdf}}\only<2>{\includegraphics[width=3.4 in]{multilink-2.pdf}}\only<3>{\includegraphics[width=3.4 in]{multilink-3.pdf}}\only<4>{\includegraphics[width=3.4 in]{multilink-4.pdf}}\only<5>{\includegraphics[width=3.4 in]{multilink-5.pdf}}\only<6>{\includegraphics[width=3.4 in]{multilink-all.pdf}}
-
-\end{centering}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{The cost of generality}
-
-\begin{centering}
-
-\noindent \only<1>{\includegraphics[width=3.1 in]{oprange-1.pdf}}\only<2>{\includegraphics[width=3.1 in]{oprange-2.pdf}}\only<3>{\includegraphics[width=3.1 in]{oprange-3.pdf}}\only<4>{\includegraphics[width=3.1 in]{oprange-4.pdf}}\only<5>{\includegraphics[width=3.1 in]{oprange-5.pdf}}\only<6>{\includegraphics[width=3.1 in]{oprange-6.pdf}}\only<7>{\includegraphics[width=3.1 in]{oprange-all.pdf}}
+\noindent \only<1>{\includegraphics[width=3.4 in]{multilink-5.pdf}}\only<2>{\includegraphics[width=3.4 in]{multilink-4.pdf}}\only<3>{\includegraphics[width=3.4 in]{multilink-3.pdf}}\only<4>{\includegraphics[width=3.4 in]{multilink-all.pdf}}
 
 \end{centering}
 
 \end{frame}
 
-\begin{frame}
-\frametitle{TCP-compatibility: it hurts when TCP is absent}
-
-\begin{centering}
-
-\noindent \only<1>{\includegraphics[width=3.3 in]{homo-1.pdf}}\only<2>{\includegraphics[width=3.3 in]{homo-2.pdf}}\only<3>{\includegraphics[width=3.3 in]{homo-3.pdf}}
-
-\end{centering}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{TCP-compatibility helps when TCP cross-traffic is present}
-
-\begin{centering}
-
-\noindent \only<1>{\includegraphics[width=3.1 in]{hetero-1.pdf}}\only<2>{\includegraphics[width=3.1 in]{hetero-2.pdf}}\only<3>{\includegraphics[width=3.1 in]{hetero-3.pdf}}
-
-\end{centering}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Ongoing work}
-
-\begin{itemize}
-
-\item What happens as the model continues to become more general?
-
-\item[]
-
-\item Does performance revert to today's TCP?
-
-\item[]
-
-\item How do we characterize the robustness to unforeseen evolution?
-
-\item[]
-
-\item In-net and end-to-end algorithms working together
-
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}
-
-\frametitle{Systems ex Machina}
-
-\begin{itemize}
-
-\item In any systems design problem, automating the process means formalizing our intuition.
-
-\item[]
-
-\item What do we need to measure to confidently deploy a new system?
-
-\item[]
-
-\item \textcolor{DarkBlue}{``If this system is the answer, what's the question?''}
-
-\end{itemize}
-
-\end{frame}
+%\begin{frame}
+%\frametitle{Ongoing work}
+%
+%\begin{itemize}
+%
+%\item What happens as the model continues to become more general?
+%
+%\item[]
+%
+%\item Does performance revert to today's TCP?
+%
+%\item[]
+%
+%\item How do we characterize the robustness to unforeseen evolution?
+%
+%\item[]
+%
+%\item In-net and end-to-end algorithms working together
+%
+%\end{itemize}
+%
+%\end{frame}
 
 \section{Other work}
 
@@ -1268,17 +1360,15 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \begin{itemize}
 
-\item Mobile shell based on \textbf{app-centric transport}
+\item Mobile shell with 600,000+ users
 
-\item Released March 2012
-
-\item 600,000+ users on Linux, Mac, Windows, Android, ChromeOS, BSD, AIX, HP-UX, Solaris\ldots
+\item Available on Linux, Mac, Windows, Android, ChromeOS, BSD, AIX, HP-UX, Solaris\ldots
 
 \item[]
 
-\item \textcolor{DarkBlue}{Model:} ANSI terminal screen state
+\item \textcolor{DarkBlue}{\bf Model}: ANSI terminal screen state
 
-\item \textcolor{DarkGreen}{Mission:} Synchronize \emph{most recent} state asap
+\item \textcolor{DarkGreen}{\bf Mission}: Synchronize \emph{most recent} state asap
 
 \end{itemize}
 
@@ -1292,45 +1382,45 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \end{frame}
 
-\begin{frame}
-\frametitle{Mosh---next steps}
+%\begin{frame}
+%\frametitle{Mosh---next steps}
+%
+%\begin{itemize}
+%
+%\item Mosh clients and servers ping each other every 3 seconds
+%
+%\item[]
+%
+%\item Next release of Mosh will include opt-in reporting
+%
+%\item[]
+%
+%\item[$\rightarrow$] real-time end-to-end Internet latency and loss model
+%
+%\end{itemize}
+%
+%\end{frame}
 
-\begin{itemize}
-
-\item Mosh clients and servers ping each other every 3 seconds
-
-\item[]
-
-\item Next release of Mosh will include opt-in reporting
-
-\item[]
-
-\item[$\rightarrow$] real-time end-to-end Internet latency and loss model
-
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Alfalfa}
-
-\Large
-
-\begin{itemize}
-
-\item Streaming video is still based on \textbf{streams}
-
-\item[]
-
-\item Much work on: buffering, switching
-
-\item[]
-
-\item In practice, still room for improvement
-
-\end{itemize}
-
-\end{frame}
+%\begin{frame}
+%\frametitle{Alfalfa}
+%
+%\Large
+%
+%\begin{itemize}
+%
+%\item Streaming video is still based on \textbf{streams}
+%
+%\item[]
+%
+%\item Much work on: buffering, switching
+%
+%\item[]
+%
+%\item In practice, still room for improvement
+%
+%\end{itemize}
+%
+%\end{frame}
 
 \begin{frame}
 \frametitle{Alfalfa}
@@ -1339,21 +1429,17 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \begin{itemize}
 
-\item Capture the \textit{entire} state of a VP8 decoder
-
-\item[]
+\item Capture the entire state of a VP8 decoder
 
 \item ``Frames'' are functions that operate on state
 
-\item[]
-
-\item Player chooses a path of frames from start to finish
+\item Player chooses best achievable path to reach ``\textit{fin}''
 
 \vspace{\baselineskip}
 
-\item \textcolor{DarkBlue}{Model:} VP8 decoder state machine
+\item \textcolor{DarkBlue}{\bf Model}: VP8 decoder state machine
 
-\item \textcolor{DarkGreen}{Mission:} 
+\item \textcolor{DarkGreen}{\bf Mission}: 
 
 \begin{itemize}
 \item Quality
@@ -1367,22 +1453,47 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 \end{frame}
 
 \begin{frame}
+\frametitle{Crowdsourced overlay networks}
 
-\frametitle{Transport Architectures for an Evolving Internet}
-
-\Large
+\large
 
 \begin{itemize}
 
-\item[Sprout] 2--4$\times$ the throughput and 7--9$\times$ less delay over cellular networks
+\item Any user can contribute a route to the network
 
-\item[Remy] computer-generated congestion control
+\item Users bid to provide multicast/unicast routes
 
-\item[Mosh] mobile shell app
+\item Makes multicast economical, but what about cheaters?
+
+\item[]
+
+\item \textcolor{DarkBlue}{\bf Model}: Connectivity graph and order book
+
+\item \textcolor{DarkGreen}{\bf Mission}: Match supply and demand
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Systems ex Machina}
+
+\begin{itemize}
+
+\item Explicit design considerations $\rightarrow$ \textbf{\textcolor{DarkGreen}{freedom to innovate}}
+
+\item \textcolor{Maroon}{``If this system is the answer, what's the question?''}
+
+\item[]
+
+\item[Sprout] 2--4$\times$ the throughput and 7--9$\times$ less delay than Skype, etc.
+
+\item[Remy] computer-generated protocol design
+
+\item[Mosh] mobile shell app in wide use
 
 \item[Alfalfa] network video that optimizes an objective
-
-\item[] \hspace{4 cm} \footnotesize \it \ldots each with an explicit \textcolor{DarkBlue}{model} and \textcolor{DarkGreen}{mission}
 
 \end{itemize}
 
