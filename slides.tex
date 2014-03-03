@@ -3,15 +3,15 @@
 \usetheme{Dresden}
 \usecolortheme{beaver}
 
-\usepackage{import, fancybox, graphicx, color, colortbl, bm, transparent}
+\usepackage{import, fancybox, graphicx, color, colortbl, bm, transparent, verbatim}
 
 \newcommand{\ssline}{\vspace{8 pt}}
 
-\title{Transport Architectures for an Evolving Internet}
+\title{TCP ex Machina: \\ Computer-Generated Congestion Control}
 
 \author{Keith~Winstein}
-\institute{MIT Computer Science and Artificial Intelligence Laboratory}
-\date{March 10, 2014}
+\institute{MIT Computer Science and Artificial Intelligence Laboratory\\\vspace{\baselineskip}\textcolor{DarkBlue}{http://mit.edu/remy}}
+\date{March 3, 2014}
 
 \beamertemplatenavigationsymbolsempty
 
@@ -28,13 +28,18 @@
 \vspace{\baselineskip}
 \vspace{\baselineskip}
 
-\tiny Joint work with Anirudh Sivaraman, Pratiksha Thaker, and Hari Balakrishnan.
+\tiny Joint work with Anirudh Sivaraman, Pratiksha Thaker, and Hari Balakrishnan
 
 \end{centering}
 
 \end{frame}
 
+\title{TCP ex Machina: Computer-Generated Congestion Control}
+\author{Keith Winstein, Anirudh Sivaraman, Pratiksha Thaker, and Hari Balakrishnan}
+
 \institute{}
+
+\begin{comment}
 
 \section{Introduction}
 
@@ -83,6 +88,8 @@ In 20 years, computer networks have seen dramatic change:
 
 \end{frame}
 
+\end{comment}
+
 \begin{frame}
 \frametitle{The march of congestion-control protocols}
 \only<1>{\noindent \hspace{-.75 cm} \includegraphics[width=1.1\textwidth]{march2-1.pdf}
@@ -115,7 +122,12 @@ In 20 years, computer networks have seen dramatic change:
 \only<10>{\noindent \hspace{-.75 cm} \includegraphics[width=1.1\textwidth]{march2-9.pdf}
 
 }
+\only<11>{\noindent \hspace{-.75 cm} \includegraphics[width=1.1\textwidth]{march2-all.pdf}
+
+}
 \end{frame}
+
+\begin{comment}
 
 \begin{frame}
 \frametitle{Declarative design}
@@ -291,7 +303,7 @@ In 20 years, computer networks have seen dramatic change:
 
 \scriptsize
 
-KW, Anirudh Sivaraman, and Hari Balakrishnan, \textbf{Stochastic Forecasts Achieve High Throughput and Low Delay over Cellular Networks}, \textit{USENIX NSDI 2013}
+%KW, Anirudh Sivaraman, and Hari Balakrishnan, \textbf{Stochastic Forecasts Achieve High Throughput and Low Delay over Cellular Networks}, \textit{USENIX NSDI 2013}
 
 \end{frame}
 
@@ -636,8 +648,10 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 
 \end{frame}
 
+\end{comment}
+
 \begin{frame}
-\frametitle{Status quo: rational choice of scheme is challenging}
+\frametitle{Rational choice of scheme is challenging}
 
 \begin{centering}
 \includegraphics[height=20 pt]{cubic.pdf}\hspace{8 pt}{\bf vs.}\hspace{8 pt}\includegraphics[height=20 pt]{compound.pdf}
@@ -679,7 +693,7 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 \end{frame}
 
 \begin{frame}
-\frametitle{Status quo: apps hack around TCP}
+\frametitle{Apps hack around TCP}
 
 \Large
 
@@ -698,7 +712,7 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 {\bf Chrome} \textcolor{DarkBlue}{(QUIC)} \\
 {\bf BitTorrent} \textcolor{DarkBlue}{($\mu$TP)} \\
 {\bf Mosh} \textcolor{DarkBlue}{(SSP)} \\
-{\bf Aspera} \textcolor{DarkBlue}{(fasp)} \\
+{\bf IBM Aspera} \textcolor{DarkBlue}{(fasp)} \\
 \end{minipage}
 }
 
@@ -723,12 +737,12 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 
 \scriptsize
 
-KW and Hari Balakrishnan, \textbf{End-to-End Transmission Control by Modeling Uncertainty about the Network State}, \textit{HotNets 2011}
+%KW and Hari Balakrishnan, \textbf{End-to-End Transmission Control by Modeling Uncertainty about the Network State}, \textit{HotNets 2011}
 
 \vspace{\baselineskip}
 \vspace{\baselineskip}
 
-KW and Hari Balakrishnan, \textbf{TCP ex Machina: Computer-Generated Congestion Control}, \textit{SIGCOMM 2013}
+%KW and Hari Balakrishnan, \textbf{TCP ex Machina: Computer-Generated Congestion Control}, \textit{SIGCOMM 2013}
 
 \end{frame}
 
@@ -1261,9 +1275,9 @@ $n$ & & 8 & Uniform(1, 16) \\
 
 \scriptsize
 
-Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
-\textbf{An Experimental Study of the Learnability of Congestion
-  Control}, \textit{in submission}
+%Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
+%\textbf{An Experimental Study of the Learnability of Congestion
+%  Control}, \textit{in submission}
 
 \end{frame}
 
@@ -1350,6 +1364,8 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 %\end{itemize}
 %
 %\end{frame}
+
+\begin{comment}
 
 \section{Other work}
 
@@ -1475,6 +1491,8 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \end{frame}
 
+\end{comment}
+
 \begin{frame}
 
 \frametitle{Systems ex Machina}
@@ -1483,17 +1501,17 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \item Explicit design considerations $\rightarrow$ \textbf{\textcolor{DarkGreen}{freedom to innovate}}
 
-\item \textcolor{Maroon}{``If this system is the answer, what's the question?''}
+\item \textcolor{Maroon}{``If this protocol is the answer, what's the question?''}
 
-\item[]
-
-\item[Sprout] 2--4$\times$ the throughput and 7--9$\times$ less delay than Skype, etc.
-
-\item[Remy] computer-generated protocol design
-
-\item[Mosh] mobile shell app in wide use
-
-\item[Alfalfa] network video that optimizes an objective
+%\item[]
+%
+%\item[Sprout] 2--4$\times$ the throughput and 7--9$\times$ less delay than Skype, etc.
+%
+%\item[Remy] computer-generated protocol design
+%
+%\item[Mosh] mobile shell app in wide use
+%
+%\item[Alfalfa] network video that optimizes an objective
 
 \end{itemize}
 
@@ -1504,7 +1522,7 @@ keithw@mit.edu
 
 \vspace{7 pt}
 
-\textcolor{DarkBlue}{http://mit.edu/keithw}
+\textcolor{DarkBlue}{http://mit.edu/remy}
 
 \end{centering}
 
