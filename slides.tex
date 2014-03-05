@@ -3,15 +3,15 @@
 \usetheme{Dresden}
 \usecolortheme{beaver}
 
-\usepackage{import, fancybox, graphicx, color, colortbl, bm, transparent}
+\usepackage{import, fancybox, graphicx, color, colortbl, bm, transparent, verbatim}
 
 \newcommand{\ssline}{\vspace{8 pt}}
 
 \title{Transport Architectures for an Evolving Internet}
 
 \author{Keith~Winstein}
-\institute{MIT Computer Science and Artificial Intelligence Laboratory}
-\date{March 10, 2014}
+\institute{MIT Computer Science and Artificial Intelligence Laboratory\\\vspace{\baselineskip}\textcolor{DarkBlue}{http://mit.edu/remy}}
+\date{March 3, 2014}
 
 \beamertemplatenavigationsymbolsempty
 
@@ -33,6 +33,8 @@
 \end{centering}
 
 \end{frame}
+
+\author{Keith Winstein, Anirudh Sivaraman, Pratiksha Thaker, and Hari Balakrishnan}
 
 \institute{}
 
@@ -637,7 +639,7 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 \end{frame}
 
 \begin{frame}
-\frametitle{Status quo: rational choice of scheme is challenging}
+\frametitle{Rational choice of scheme is challenging}
 
 \begin{centering}
 \includegraphics[height=20 pt]{cubic.pdf}\hspace{8 pt}{\bf vs.}\hspace{8 pt}\includegraphics[height=20 pt]{compound.pdf}
@@ -679,7 +681,7 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 \end{frame}
 
 \begin{frame}
-\frametitle{Status quo: apps hack around TCP}
+\frametitle{Apps hack around TCP}
 
 \Large
 
@@ -698,7 +700,7 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 {\bf Chrome} \textcolor{DarkBlue}{(QUIC)} \\
 {\bf BitTorrent} \textcolor{DarkBlue}{($\mu$TP)} \\
 {\bf Mosh} \textcolor{DarkBlue}{(SSP)} \\
-{\bf Aspera} \textcolor{DarkBlue}{(fasp)} \\
+{\bf IBM Aspera} \textcolor{DarkBlue}{(fasp)} \\
 \end{minipage}
 }
 
@@ -964,7 +966,7 @@ $\min_i \textsf{throughput}_i$
 
 \pause
 
-\item[] \textcolor{DarkGreen}{\textbf{Complexity in general:}} \textsc{NEXP}-complete
+\item[] \fbox{\textcolor{DarkGreen}{\textbf{Complexity in general:}} $\mathcal{O}(2^{2^n})$ (\textsc{NEXP}-hard)}
 
 \end{itemize}
 
