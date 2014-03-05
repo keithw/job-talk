@@ -142,9 +142,15 @@ In 20 years, computer networks have seen dramatic change:
 \noindent \textcolor{DarkBlue}{\bf Model}: explicit statement of assumptions about the problem
 
 \vspace{\baselineskip}
-\vspace{\baselineskip}
 
 \textcolor{DarkGreen}{\bf Mission}: objective that the application wants
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+Explicit design considerations $\rightarrow$ \textbf{\textcolor{Maroon}{freedom to make changes}}
 
 \end{frame}
 
@@ -161,11 +167,11 @@ In 20 years, computer networks have seen dramatic change:
 
 \item[Remy:] Computer-generated protocol design
 
-\visible<3->{{\fbox{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = user-specified, \textbf{\textcolor{DarkGreen}{mission}} = user-specified}}}
+\visible<3->{{\fbox{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = user-specified networks \& workloads, \textbf{\textcolor{DarkGreen}{mission}} = user-specified}}}
 
 \item[]
 
-\item[Mosh:] Remote terminal app
+\item[Mosh:] Mobile shell \& state sync protocol
 
 \visible<4->{{\fbox{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = ANSI terminal emulator, \textbf{\textcolor{DarkGreen}{mission}} = convey latest frame}}}
 
@@ -391,11 +397,11 @@ All source code was \bf{\textcolor{DarkGreen}{frozen before data collection bega
 
 \begin{itemize}
 
-\item Observe number of bytes received every $\tau$
+\item \textcolor{DarkBlue}{\bf Observe} packets received every $\tau$
 
 \item[]
 
-\item Update probability distribution of $\lambda$
+\item \textcolor{DarkGreen}{\bf Update} P($\lambda$)
 
 \end{itemize}
 
@@ -404,18 +410,14 @@ All source code was \bf{\textcolor{DarkGreen}{frozen before data collection bega
 \begin{frame}
 \frametitle{\textbf{Predict}: future link speed}
 
-\large
+\Large
 
 \begin{itemize}
-\item Evolve model forward
+\item \textcolor{DarkBlue}{\bf Evolve} model forward
 
 \item[]
 
-\item Cautious forecast: 5th percentile cumulative packets
-
-\item[]
-
-\item Receiver makes forecast; piggybacks on acknowledgment
+\item \textcolor{DarkGreen}{\bf Forecast} 5th percentile cumulative packets
 
 %\item Almost all precalculated
 
@@ -468,7 +470,7 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 \end{frame}
 
 \begin{frame}
-\frametitle{Competes with AQM even though end-to-end}
+\frametitle{Sprout is end-to-end, but comparable to in-net control}
 \vspace{-1 cm}
 \def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Codels.pdf_tex}
 \end{frame}
@@ -560,11 +562,13 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 
 \includegraphics[width=4 cm]{screenhero.png} & & \includegraphics[width=4 cm]{highfive.png} \\
 
-\raisebox{0.8 ex}{\includegraphics[width=3 cm]{Google_Logo_Old.PNG}} & & \includegraphics[width=4 cm]{meraki.png} \\
+\\
+
+\raisebox{0.8 ex}{\includegraphics[width=3 cm]{Google_Logo_Old.PNG}} & & \raisebox{-0.3cm}{\includegraphics[width=3 cm]{viber.png}} \\
 
 \\
 
-\includegraphics[width=3 cm]{viber.png} & & \includegraphics[width=2 cm]{adobe-logo.jpg} \\
+\includegraphics[width=2.3 cm]{adobe-logo.jpg} & \raisebox{0.3 cm}{\includegraphics[width=6 cm]{facebook-logo-face.jpeg}} \\
 
 \end{tabular}
 
@@ -993,7 +997,7 @@ $\min_i \textsf{throughput}_i$
 \begin{frame}
 \frametitle{Remy: tractable search for best policy}
 
-\large
+\Large
 
 \begin{itemize}
 
@@ -1001,7 +1005,7 @@ $\min_i \textsf{throughput}_i$
 
 \item[]
 
-\item Instead, remember only \textbf{\textcolor{DarkRed}{a summary of history}}
+\item Instead, \textbf{\textcolor{DarkBlue}{summarize the history}}
 
 \end{itemize}
 
@@ -1041,16 +1045,20 @@ $\min_i \textsf{throughput}_i$
 \end{frame}
 
 \begin{frame}
-\frametitle{Why these congestion signals?}
+\frametitle{Why these four features?}
 
 \Large
 
 \begin{itemize}
 
-\item Removing any of the four hurts
+\item We can measure the benefit of each!
+
+\item[]
+
+\item Removing any one hurts
 
 \begin{itemize}
-\item $r\_ewma_\alpha$ hurts the most
+\item losing $r\_ewma_\alpha$ hurts the most
 \end{itemize}
 
 \item[]
@@ -1059,7 +1067,7 @@ $\min_i \textsf{throughput}_i$
 
 \item[]
 
-\item Other signals might help on other networks
+\item \ldots but others might help on some networks
 
 \end{itemize}
 
@@ -1265,7 +1273,7 @@ $n$ & & 8 & Uniform(1, 16) \\
 \Large
 
 \begin{quote}
-\color{DarkBlue} \textit{From the perspective of a network endpoint, \bf what matters?}
+\color{DarkBlue} \textit{From the perspective of an endpoint, {\bf what does it help to know} about the network?}
 
 \end{quote}
 
@@ -1303,7 +1311,7 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \begin{centering}
 
-\noindent \only<1>{\includegraphics[width=3.1 in]{hetero-1.pdf}}\only<2>{\includegraphics[width=3.1 in]{hetero-2.pdf}}\only<3>{\includegraphics[width=3.1 in]{hetero-3.pdf}}
+\noindent \only<1>{\includegraphics[width=3.3 in]{hetero-1.pdf}}\only<2>{\includegraphics[width=3.3 in]{hetero-2.pdf}}\only<3>{\includegraphics[width=3.3 in]{hetero-3.pdf}}
 
 \end{centering}
 
@@ -1449,15 +1457,15 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \begin{itemize}
 
-\item Capture the entire state of a VP8 decoder
+\item VP8 decoder in state-passing style
 
-\item ``Frames'' are functions that operate on state
+\item ``Frames'' are functions $\textsc{\{raster\}}^3 \times \textsc{I} \rightarrow \textsc{\{raster\}}^3 \times \textsc{I} \times \textsc{\{raster?\}}$
 
-\item Player chooses best achievable path to reach ``\textit{fin}''
+\item Player chooses best achievable path from start $\rightarrow$ \textit{fin}
 
 \vspace{\baselineskip}
 
-\item \textcolor{DarkBlue}{\bf Model}: VP8 decoder state machine
+\item \textcolor{DarkBlue}{\bf Model}: VP8 decoder \& future network speed
 
 \item \textcolor{DarkGreen}{\bf Mission}: 
 
@@ -1501,7 +1509,7 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \begin{itemize}
 
-\item Explicit design considerations $\rightarrow$ \textbf{\textcolor{DarkGreen}{freedom to innovate}}
+\item Explicit design considerations $\rightarrow$ \textbf{\textcolor{Maroon}{freedom to make changes}}
 
 \item \textcolor{Maroon}{``If this system is the answer, what's the question?''}
 
