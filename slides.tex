@@ -10,7 +10,7 @@
 \title{Transport Architectures for an Evolving Internet}
 
 \author{Keith~Winstein}
-\institute{MIT Computer Science and Artificial Intelligence Laboratory\\\vspace{\baselineskip}\textcolor{DarkBlue}{http://mit.edu/remy}}
+\institute{MIT Computer Science and Artificial Intelligence Laboratory\\\vspace{\baselineskip}\textcolor{DarkBlue}{}}
 \date{March 3, 2014}
 
 \beamertemplatenavigationsymbolsempty
@@ -34,7 +34,7 @@
 
 \end{frame}
 
-\author{Keith Winstein, Anirudh Sivaraman, Pratiksha Thaker, and Hari Balakrishnan}
+\author{Keith Winstein (with Anirudh Sivaraman, Pratiksha Thaker, and Hari Balakrishnan)}
 
 \institute{}
 
@@ -834,17 +834,35 @@ $\min_i \textsf{throughput}_i$
 }
 \end{itemize}
 
+\vspace{\baselineskip}
+
 \visible<4>{
+\begin{tabular}{p{5.5 cm}p{5.5 cm}}
 \textbf{Minimize}
 
 \begin{itemize}
-\item average flow completion time
+\item mean flow completion time
 
 \item page load time
 
-\item tail completion time
+%\item tail completion time
 
 \end{itemize}
+
+&
+
+\textbf{Prevent}
+
+\begin{itemize}
+
+\item pathological behavior
+
+\item congestion collapse
+
+\end{itemize}
+
+\end{tabular}
+
 }
 
 \end{frame}
