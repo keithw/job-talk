@@ -11,7 +11,7 @@
 
 \author{Keith~Winstein}
 \institute{MIT Computer Science and Artificial Intelligence Laboratory\\\vspace{\baselineskip}\textcolor{DarkBlue}{}}
-\date{March 3, 2014}
+\date{March 7, 2014}
 
 \beamertemplatenavigationsymbolsempty
 
@@ -201,7 +201,7 @@ Explicit design considerations $\rightarrow$ \textbf{\textcolor{Maroon}{freedom 
 \end{frame}
 
 \begin{frame}
-\frametitle{Verizon LTE uplink throughput}
+\frametitle{Verizon LTE ping delay during one TCP download}
 
 \begin{centering}
 
@@ -849,6 +849,8 @@ $\min_i \textsf{throughput}_i$
 
 \item page load time
 
+\item power consumption
+
 %\item tail completion time
 
 \end{itemize}
@@ -1328,34 +1330,6 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \end{frame}
 
-\begin{frame}
-\frametitle{When the model is wrong about the topology}
-
-\large
-
-\begin{centering}
-\textcolor{DarkBlue}{\only<1>{One bottleneck}\only<2>{Two bottlenecks}}
-
-\end{centering}
-
-\vspace{\baselineskip}
-\vspace{\baselineskip}
-
-\only<1>{\includegraphics[width=\textwidth]{onelink.pdf}}\only<2>{\includegraphics[width=\textwidth]{twolink.pdf}}
-
-\end{frame}
-
-\begin{frame}
-
-\begin{centering}
-\frametitle{When the model is wrong about the topology}
-
-\noindent \only<1>{\includegraphics[width=3.4 in]{multilink-5.pdf}}\only<2>{\includegraphics[width=3.4 in]{multilink-4.pdf}}\only<3>{\includegraphics[width=3.4 in]{multilink-3.pdf}}\only<4>{\includegraphics[width=3.4 in]{multilink-all.pdf}}
-
-\end{centering}
-
-\end{frame}
-
 %\begin{frame}
 %\frametitle{Ongoing work}
 %
@@ -1535,6 +1509,40 @@ keithw@mit.edu
 \textcolor{DarkBlue}{http://mit.edu/keithw}
 
 \end{centering}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{When the model is wrong about the topology}
+
+\large
+
+\begin{centering}
+\textcolor{DarkBlue}{\only<1>{One bottleneck}\only<2>{Two bottlenecks}}
+
+\end{centering}
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+\only<1>{\includegraphics[width=\textwidth]{onelink.pdf}}\only<2>{\includegraphics[width=\textwidth]{twolink.pdf}}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{centering}
+\frametitle{When the model is wrong about the topology}
+
+\noindent \only<1>{\includegraphics[width=3.4 in]{multilink-5.pdf}}\only<2>{\includegraphics[width=3.4 in]{multilink-4.pdf}}\only<3>{\includegraphics[width=3.4 in]{multilink-3.pdf}}\only<4>{\includegraphics[width=3.4 in]{multilink-all.pdf}}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
+
+\only<1>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Verizon3G1xEV-DO-Downlink.pdf_tex}}\only<2>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Verizon3G1xEV-DO-Uplink.pdf_tex}}\only<3>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{ATTLTE-Downlink.pdf_tex}}\only<4>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{ATTLTE-Uplink.pdf_tex}}\only<5>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{T-Mobile3GUMTS-Downlink.pdf_tex}}\only<6>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{T-Mobile3GUMTS-Uplink.pdf_tex}}
 
 \end{frame}
 
