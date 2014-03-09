@@ -13,8 +13,8 @@
    viewBox="0 0 568.82043 353.39404"
    id="svg4451"
    version="1.1"
-   inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="VerizonLTE-Uplink.pdf">
+   inkscape:version="0.48+devel r"
+   sodipodi:docname="VerizonLTE-Uplink.svg">
   <metadata
      id="metadata4639">
     <rdf:RDF>
@@ -147,14 +147,14 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1195"
-     inkscape:window-height="1384"
+     inkscape:window-height="768"
      id="namedview4635"
      showgrid="false"
      inkscape:zoom="1.4318111"
-     inkscape:cx="353.00474"
+     inkscape:cx="364.66483"
      inkscape:cy="184.65674"
      inkscape:window-x="0"
-     inkscape:window-y="517"
+     inkscape:window-y="25"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg4451"
      fit-margin-top="0"
@@ -324,20 +324,6 @@
      id="text4570"
      x="320.92041"
      y="10.737305">Verizon LTE Uplink</text>
-  <text
-     style="font-size:15px;text-anchor:start;color:#000000;fill:#0000ff;stroke:none;font-family:Arial"
-     id="text4574"
-     x="444.8204"
-     y="56.137306">\color{Orange}\color{blue}Sprout-EWMA</text>
-  <use
-     xlink:href="#gpPt2"
-     transform="matrix(4.5,0,0,4.5,440.32041,56.137305)"
-     id="use4576"
-     style="color:#0000ff;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter"
-     x="0"
-     y="0"
-     width="600"
-     height="480" />
   <text
      style="font-size:15px;text-anchor:start;color:#000000;fill:#008000;stroke:none;font-family:Arial"
      id="text4580"
