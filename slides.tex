@@ -1021,17 +1021,17 @@ $\min_i \textsf{throughput}_i$
 \hspace{0.5 cm}\begin{minipage}{10.0 cm}
 \begin{itemize}
 
-\item[$r\_ewma_\alpha$:] \textbf{short-term} moving average of interval between acks
+\item[$rec\_rate_\alpha$:] \textbf{short-term} moving average of interval between acks
 
 \textcolor{Red}{\textit{``How fast are packets arriving (now)?''}}
 
-\item[$r\_ewma_\beta$:] \textbf{long-term} moving average of same
+\item[$rec\_rate_\beta$:] \textbf{long-term} moving average of same
 
 \textcolor{Red}{\textit{``How fast are packets arriving (smoothed)?''}}
 
 \item[]
 
-\item[$s\_ewma$:] moving average of interval between acked timestamps
+\item[$send\_rate$:] moving average of interval between acked timestamps
 
 \textcolor{Red}{\textit{``How fast was I sending?''}}
 
@@ -1060,7 +1060,7 @@ $\min_i \textsf{throughput}_i$
 \item Removing any one hurts
 
 \begin{itemize}
-\item losing $r\_ewma_\alpha$ hurts the most
+\item losing $rec\_rate_\alpha$ hurts the most
 \end{itemize}
 
 \item[]
@@ -1080,7 +1080,7 @@ $\min_i \textsf{throughput}_i$
 
 \Large
 
-\[\textsc{RemyCC}( \textcolor{DarkBlue}{r\_ewma_{\alpha\beta}}, \textcolor{DarkBlue}{s\_ewma}, \textcolor{DarkBlue}{rtt\_ratio} ) \rightarrow \langle \textcolor{Red}{m}, \textcolor{Red}{b}, \textcolor{Red}{\tau} \rangle \]
+\[\textsc{RemyCC}( \textcolor{DarkBlue}{rec\_rate_{\alpha\beta}}, \textcolor{DarkBlue}{send\_rate}, \textcolor{DarkBlue}{rtt\_ratio} ) \rightarrow \langle \textcolor{Red}{m}, \textcolor{Red}{b}, \textcolor{Red}{\tau} \rangle \]
 
 \ssline
 \ssline
@@ -1105,7 +1105,7 @@ $\min_i \textsf{throughput}_i$
 \textbf{On ack:}
 
 \begin{itemize}
-\item $\langle \textcolor{Red}{m}, \textcolor{Red}{b}, \textcolor{Red}{\tau}\rangle \leftarrow \textsc{RemyCC}( \textcolor{DarkBlue}{r\_ewma_{\alpha\beta}}, \textcolor{DarkBlue}{s\_ewma}, \textcolor{DarkBlue}{rtt\_ratio} )$
+\item $\langle \textcolor{Red}{m}, \textcolor{Red}{b}, \textcolor{Red}{\tau}\rangle \leftarrow \textsc{RemyCC}( \textcolor{DarkBlue}{rec\_rate_{\alpha\beta}}, \textcolor{DarkBlue}{send\_rate}, \textcolor{DarkBlue}{rtt\_ratio} )$
 
 \item $\texttt{cwnd} \leftarrow \textcolor{Red}{m} \cdot \texttt{cwnd} + \textcolor{Red}{b}$
 \end{itemize}
@@ -1142,7 +1142,7 @@ Find piecewise-continuous \textsc{RemyCC}() that \\ optimizes expected value of 
 
 \vspace{\baselineskip}
 
-$\langle \textcolor{Red}{m}, \textcolor{Red}{b}, \textcolor{Red}{\tau}\rangle \leftarrow \textsc{\footnotesize RemyCC}( s\_ewma, r\_ewma_{\alpha},\begin{tabular}{l}\only<2>{\cellcolor{DarkBlue}}\textcolor{DarkBlue}{$r\_ewma_{\beta}, rtt\_ratio$}\end{tabular} )$
+\noindent \mbox{$\langle \textcolor{Red}{m}, \textcolor{Red}{b}, \textcolor{Red}{\tau}\rangle \leftarrow \textsc{\footnotesize RemyCC}( send\_rate, rec\_rate_{\alpha},\begin{tabular}{l}\only<2>{\cellcolor{DarkBlue}}\textcolor{DarkBlue}{$rec\_rate_{\beta}, rtt\_ratio$}\end{tabular} )$}
 
 \end{frame}
 
@@ -1275,7 +1275,8 @@ $n$ & & 8 & Uniform(1, 16) \\
 \Large
 
 \begin{quote}
-\color{DarkBlue} \textit{From the perspective of an endpoint, {\bf what does it help to know} about the network?}
+\color{DarkBlue} \textit{From the perspective of a network endpoint,
+  {\bf what information is helpful}?}
 
 \end{quote}
 
@@ -1287,7 +1288,13 @@ $n$ & & 8 & Uniform(1, 16) \\
 \end{quote}
 
 \vspace{\baselineskip}
-\vspace{\baselineskip}
+
+\begin{quote}
+\color{Maroon} \textit{How can we \textbf{trust} a computer-designed network protocol?}
+
+\end{quote}
+
+\vspace{12 pt}
 
 \scriptsize
 

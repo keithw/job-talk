@@ -67,7 +67,6 @@
     \put(0.02933333,0.434){\rotatebox{90}{\makebox(0,0)[b]{\smash{Utilization (percent)}}}}%
     \put(0.539,0.125){\makebox(0,0)[b]{\smash{Self-inflicted delay (ms)}}}%
     \put(0.83966667,0.41166667){\makebox(0,0)[lb]{\smash{\color{blue}Sprout}}}%
-    \put(0.69983333,0.582){\makebox(0,0)[lb]{\smash{\color{blue}Sprout-aggressive}}}%
     \put(0.20066667,0.45983333){\makebox(0,0)[lb]{\smash{\color{ForestGreen}Cubic}}}%
     \put(0.66183333,0.49766667){\makebox(0,0)[lb]{\smash{\color{ForestGreen}\bf Cubic-over-CoDel}}}%
   \end{picture}%
