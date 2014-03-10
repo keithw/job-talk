@@ -179,7 +179,7 @@ In 20 years, computer networks have seen dramatic change:
 \end{comment}
 
 \begin{frame}
-\frametitle{Rational choice of scheme is challenging}
+\frametitle{Rational choice among ``imperative'' schemes is challenging}
 
 \begin{centering}
 \includegraphics[height=20 pt]{cubic.pdf}\hspace{8 pt}{\bf vs.}\hspace{8 pt}\includegraphics[height=20 pt]{compound.pdf}
@@ -237,16 +237,30 @@ On today's Internet:
 \end{comment}
 
 \begin{frame}
-\frametitle{Idea: computer-generated protocols}
+\frametitle{Idea: declarative design via computer-generated protocols}
 
 \Large Transport layer should adapt to \textbf{whatever}
 
-\begin{itemize}
-\item network may do \visible<2>{(\textbf{\textcolor{DarkBlue}{model}})}
+\begin{columns}
 
-\item application wants \visible<2>{(\textbf{\textcolor{DarkGreen}{mission}})}
+\begin{column}{0.66 \textwidth}
+
+\begin{itemize}
+\item network may do (\textbf{\textcolor{DarkBlue}{model}})
+
+\item application wants (\textbf{\textcolor{DarkGreen}{mission}})
 
 \end{itemize}
+
+\end{column}
+
+\begin{column}{0.33\textwidth}
+
+\includegraphics[width=\textwidth]{transport.pdf}
+
+\end{column}
+
+\end{columns}
 
 \end{frame}
 
@@ -725,6 +739,18 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 \end{frame}
 
 \begin{frame}
+
+\only<1>{\frametitle{Cellular networks generally have {\bf per-user} queues}}
+\only<2>{\frametitle{\ldots but Internet in general doesn't.}}
+\only<3>{\frametitle{How can multiple contending users manage congestion?}}
+
+\only<1>{\noindent\includegraphics[width=\textwidth]{dumbbell-2.pdf}}\only<2>{\noindent\includegraphics[width=\textwidth]{dumbbell-1.pdf}}\only<3>{\noindent\includegraphics[width=\textwidth]{dumbbell.pdf}}
+
+\end{frame}
+
+\begin{comment}
+
+\begin{frame}
 \frametitle{Limitations of Sprout}
 
 \Large
@@ -737,7 +763,7 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 
 \item[]
 
-\item What if there are multiple users on the same bottleneck queue?
+\item How to design for multiple contending users?
 
 \end{itemize}
 
@@ -748,12 +774,7 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 
 \end{frame}
 
-\begin{frame}
-\frametitle{Congestion-control in general is a multi-agent problem}
-
-\only<1>{\noindent\includegraphics[width=\textwidth]{dumbbell-2.pdf}}\only<2>{\noindent\includegraphics[width=\textwidth]{dumbbell-1.pdf}}\only<3>{\noindent\includegraphics[width=\textwidth]{dumbbell.pdf}}
-
-\end{frame}
+\end{comment}
 
 \begin{comment}
 
@@ -790,7 +811,7 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 \end{comment}
 
 \begin{frame}
-\frametitle{Prior work on multi-user congestion control}
+\frametitle{Prior work}
 
 \begin{itemize}
 
