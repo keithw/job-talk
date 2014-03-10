@@ -725,13 +725,6 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 \end{frame}
 
 \begin{frame}
-\frametitle{Sprout models one user's traffic on one bottleneck}
-
-\only<1>{\noindent\includegraphics[width=\textwidth]{dumbbell-2.pdf}}\only<2>{\noindent\includegraphics[width=\textwidth]{dumbbell-1.pdf}}\only<3>{\noindent\includegraphics[width=\textwidth]{dumbbell.pdf}}
-
-\end{frame}
-
-\begin{frame}
 \frametitle{Limitations of Sprout}
 
 \Large
@@ -744,7 +737,7 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 
 \item[]
 
-\item What if there are multiple users?
+\item What if there are multiple users on the same bottleneck queue?
 
 \end{itemize}
 
@@ -752,6 +745,13 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 
 %\item Assumption: application always has data to send
 
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Congestion-control in general is a multi-agent problem}
+
+\only<1>{\noindent\includegraphics[width=\textwidth]{dumbbell-2.pdf}}\only<2>{\noindent\includegraphics[width=\textwidth]{dumbbell-1.pdf}}\only<3>{\noindent\includegraphics[width=\textwidth]{dumbbell.pdf}}
 
 \end{frame}
 
@@ -788,6 +788,95 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 \end{frame}
 
 \end{comment}
+
+\begin{frame}
+\frametitle{Prior work on multi-user congestion control}
+
+\begin{itemize}
+
+\item {\bf \textcolor{DarkBlue}{Jacobson (1988):}} additive-increase, multiplicative-decrease
+
+\item[]
+
+\item {\bf \textcolor{DarkBlue}{Kelly, Maulloo \& Tan (1998):}} optimization problem that AIMD solves {\it asymptotically}
+
+\item[]
+
+\item {\bf \textcolor{DarkBlue}{Yi \& Chiang (2008):}} stochastic network utility maximization
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\only<1>{\frametitle{The basic question of distributed congestion control}}
+\only<2>{\frametitle{Super\textcolor{Black}{rat}ional congestion control}}
+
+\begin{centering}
+\fbox{
+\begin{minipage}{6 cm}
+\LARGE At this moment,\visible<1->{\textcolor{DarkBlue}{\bf *}} do I:
+
+\begin{itemize}
+
+\item send a packet
+\item not send a packet?
+
+\end{itemize}
+
+\end{minipage}
+}
+
+\ssline
+\ssline
+\ssline
+
+\end{centering}
+
+\visible<2->{\Large \noindent \hspace{-.5cm} \mbox{\textcolor{DarkBlue}{\textbf{*} Assuming every user is running the same algorithm.}}}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Internet congestion control as a Dec-POMDP}
+
+\begin{itemize}
+
+\item[$I$:] independent endpoint computers
+
+\pause
+
+\item[$S$:] packets in net + whether each computer has data to send now
+
+\pause
+
+\item[$A_i$:] \{ send a packet, don't send a packet \}
+
+\pause
+
+\item[$T$:] the \textbf{\textcolor{DarkBlue}{model}}
+
+\pause
+
+\item[$R$:] the \textbf{\textcolor{DarkGreen}{mission}}
+
+\pause
+
+\item[$\Omega$:] acknowledgements from corresponding receiver
+
+\pause
+
+\item[$O$:] deterministic
+
+\item[]
+
+\pause
+
+\item[] \fbox{\textcolor{DarkGreen}{\textbf{Complexity in general:}} $\mathcal{O}(2^{2^n})$ (\textsc{NEXP}-hard)}
+
+\end{itemize}
+
+\end{frame}
 
 \begin{frame}
 \frametitle{What we built}
@@ -827,28 +916,6 @@ KW and Hari Balakrishnan, \textbf{TCP ex Machina: Computer-Generated Congestion 
 
 \end{frame}
 
-\begin{frame}
-\frametitle{The basic question of congestion control}
-
-\begin{centering}
-\fbox{
-\begin{minipage}{6 cm}
-\LARGE At this moment, do I:
-
-\begin{itemize}
-
-\item send a packet
-\item not send a packet?
-
-\end{itemize}
-
-\end{minipage}
-}
-
-\end{centering}
-
-\end{frame}
-
 %\begin{frame}
 %\frametitle{The goal}
 %
@@ -863,6 +930,38 @@ KW and Hari Balakrishnan, \textbf{TCP ex Machina: Computer-Generated Congestion 
 %\end{itemize}
 %
 %\end{frame}
+
+\begin{frame}
+\frametitle{Encoding the designer's prior assumptions}
+
+\begin{itemize}
+
+\Large
+
+\item \textcolor{DarkBlue}{\bf Model} of network uncertainty
+
+\begin{itemize}
+\item Link speed distribution
+\item Delay distribution
+\item Topology distribution
+\end{itemize}
+
+\item \textcolor{DarkBlue}{\bf Model} of workload
+
+\begin{itemize}
+\item Degree of multiplexing
+
+\item Nature of traffic
+\begin{itemize}
+\item Web browsing
+\item MapReduce
+\item videoconferencing
+\end{itemize}
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
 
 \begin{frame}
 \frametitle{\textbf{\textcolor{DarkGreen}{Missions}} of congestion control}
@@ -932,34 +1031,6 @@ $\min_i \textsf{throughput}_i$
 
 \end{frame}
 
-\begin{frame}
-\frametitle{Encoding the designer's prior assumptions}
-
-\begin{itemize}
-
-\Large
-
-\item \textcolor{DarkBlue}{\bf Model} of network uncertainty
-
-\begin{itemize}
-\item Link speed distribution
-\item Delay distribution
-\item Topology distribution
-\end{itemize}
-
-\item \textcolor{DarkBlue}{\bf Model} of workload
-
-\begin{itemize}
-\item Web browsing
-\item MapReduce
-\item videoconferencing
-\item streaming video (YouTube/Netflix)
-\end{itemize}
-
-\end{itemize}
-
-\end{frame}
-
 %\begin{frame}
 %\frametitle{Statement of the problem}
 %
@@ -978,75 +1049,6 @@ $\min_i \textsf{throughput}_i$
 %\end{itemize}
 %
 %\end{frame}
-
-\begin{frame}
-\frametitle{Super\textcolor{Black}{rat}ional congestion control}
-
-\begin{centering}
-\fbox{
-\begin{minipage}{6 cm}
-\LARGE At this moment,\visible<1->{\textcolor{DarkBlue}{\bf *}} do I:
-
-\begin{itemize}
-
-\item send a packet
-\item not send a packet?
-
-\end{itemize}
-
-\end{minipage}
-}
-
-\ssline
-\ssline
-\ssline
-
-\end{centering}
-
-\visible<2->{\Large \noindent \hspace{-.5cm} \mbox{\textcolor{DarkBlue}{\textbf{*} Assuming every user is running the same algorithm.}}}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Internet congestion control as a Dec-POMDP}
-
-\begin{itemize}
-
-\item[$I$:] independent endpoint computers
-
-\pause
-
-\item[$S$:] packets in net + whether each computer has data to send now
-
-\pause
-
-\item[$A_i$:] \{ send a packet, don't send a packet \}
-
-\pause
-
-\item[$T$:] simple networks are deterministic, with parameters drawn from a distribution. Flows arrive per a random process.
-
-\pause
-
-\item[$R$:] overall objective awarded at end of long run
-
-\pause
-
-\item[$\Omega$:] acknowledgements from corresponding receiver
-
-\pause
-
-\item[$O$:] deterministic
-
-\item[]
-
-\pause
-
-\item[] \fbox{\textcolor{DarkGreen}{\textbf{Complexity in general:}} $\mathcal{O}(2^{2^n})$ (\textsc{NEXP}-hard)}
-
-\end{itemize}
-
-\end{frame}
 
 \begin{frame}
 \frametitle{Remy: tractable search for best policy}
