@@ -49,8 +49,23 @@ In 20 years, computer networks have seen dramatic change:
 
 \vspace{\baselineskip}
 
+\begin{columns}
+
+\begin{column}{0.5\textwidth}
+
+\only<1>{\includegraphics[width=5 cm]{layers.pdf}}\only<2>{\includegraphics[width=5 cm]{link.pdf}}\only<3>{\includegraphics[width=5 cm]{internet.pdf}}\only<4>{\includegraphics[width=5 cm]{application.pdf}}\only<5>{\includegraphics[width=5 cm]{transport.pdf}}
+
+\end{column}
+
+\begin{column}{0.5 \textwidth}
+
 \begin{itemize}
 
+\only<1>{
+\item[]
+}
+
+\only<2>{
 \item Wi-Fi
 
 \item Cellular networks
@@ -60,14 +75,29 @@ In 20 years, computer networks have seen dramatic change:
 \item 10 GigE
 
 \item Transoceanic links
+}
 
-\item[]
-
+\only<3>{
 \item Ubiquitous mobility
+}
 
-\item Huge amounts of streaming video
+\only<4>{
+\item Short flows (Web)
+
+\item Streaming video (YouTube/Netflix)
+
+\item Conferencing (Skype/Facetime)
+}
+
+\only<5>{
+\item \colorbox{LightBlue}{{\LARGE \bf ???}}
+}
 
 \end{itemize}
+
+\end{column}
+
+\end{columns}
 
 \end{frame}
 
@@ -76,12 +106,12 @@ In 20 years, computer networks have seen dramatic change:
 
 \Large
 
-\textcolor{DarkBlue}{How should users deal with an evolving network?}
+\mbox{\textcolor{DarkBlue}{How should protocols deal with an evolving network?}}
 
 \vspace{\baselineskip}
 \vspace{\baselineskip}
 
-\textcolor{DarkGreen}{One approach: design new protocols.}
+\textcolor{DarkGreen}{One approach: \textbf{design new protocols}.}
 
 \end{frame}
 
@@ -119,40 +149,138 @@ In 20 years, computer networks have seen dramatic change:
 }
 \end{frame}
 
+\begin{comment}
+
 \begin{frame}
-\frametitle{Declarative design}
+\frametitle{Now that we have 40+ algorithms\ldots}
 
 \Large
 
+\begin{itemize}
+
+%\item Sprout for cellular networks?
+
+\item Wireless-TCP for Wi-Fi?
+
+\item Fast-TCP for long-distance links?
+
+\item Datacenter-TCP for datacenters?
+
+\item CoDel for cable modems?
+
+
+
+\item \textcolor{DarkGreen}{\bf TBA-TCP for tomorrow's networks?}
+
+\end{itemize}
+
+\end{frame}
+
+\end{comment}
+
+\begin{frame}
+\frametitle{Rational choice of scheme is challenging}
+
 \begin{centering}
+\includegraphics[height=20 pt]{cubic.pdf}\hspace{8 pt}{\bf vs.}\hspace{8 pt}\includegraphics[height=20 pt]{compound.pdf}
 
-\fbox{Systems with a \textcolor{DarkBlue}{\bf model} and a \textcolor{DarkGreen}{\bf mission}.}
+\end{centering}
 
-\vspace{\baselineskip}
+\ssline
+\ssline
+\ssline
+
+\begin{itemize}
+
+\Large
+
+\item Different missions?
+
+\item Different assumptions about network?
+
+\item One scheme just plain better?
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Networks constrained by transport's fuzzy assumptions}
+
+\Large
+
+On today's Internet:
+
+\begin{itemize}
+\item Mask stochastic loss $\rightarrow$ {\bf \textcolor{Maroon}{long delays}}
+%\item Bufferbloat
+\item \mbox{No out-of-order delivery $\rightarrow$ {\bf \textcolor{Maroon}{no parallel routing}}}
+\item[]
+\item[]
+\item[] {\it Advice for Internet Subnetwork Designers}\\ (RFC 3819) is 21,000 words!
+\end{itemize}
+
+\end{frame}
+
+\begin{comment}
+
+\begin{frame}
+\frametitle{Transport protocols}
+
+\begin{centering}
+\includegraphics[width=8 cm]{layers.pdf}
 
 \end{centering}
 
 \end{frame}
 
+\end{comment}
+
 \begin{frame}
-\frametitle{Explicitness in systems design}
+\frametitle{Idea: computer-generated protocols}
 
-\large
+\Large Transport layer should adapt to \textbf{whatever}
 
-\noindent \textcolor{DarkBlue}{\bf Model}: explicit statement of assumptions about the problem
+\begin{itemize}
+\item network may do \visible<2>{(\textbf{\textcolor{DarkBlue}{model}})}
 
-\vspace{\baselineskip}
+\item application wants \visible<2>{(\textbf{\textcolor{DarkGreen}{mission}})}
 
-\textcolor{DarkGreen}{\bf Mission}: objective that the application wants
-
-\vspace{\baselineskip}
-\vspace{\baselineskip}
-\vspace{\baselineskip}
-\vspace{\baselineskip}
-
-Explicit design considerations $\rightarrow$ \textbf{\textcolor{Maroon}{freedom to make changes}}
+\end{itemize}
 
 \end{frame}
+
+\begin{comment}
+
+\begin{frame}
+\frametitle{Our approach: declarative systems design}
+
+\Large
+
+\begin{centering}
+
+\colorbox{Bisque}{
+\begin{tabular}{l}
+Computer-generated systems,\\
+given a \textcolor{DarkBlue}{\bf model} and a \textcolor{DarkGreen}{\bf mission}.\\
+\end{tabular}}
+
+
+\end{centering}
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+\noindent \textcolor{DarkBlue}{\bf model}: assumptions about the problem
+
+\vspace{\baselineskip}
+
+\textcolor{DarkGreen}{\bf mission}: objective that the users want
+
+\end{frame}
+
+\end{comment}
 
 \begin{frame}
 \frametitle{Contributions}
@@ -161,25 +289,27 @@ Explicit design considerations $\rightarrow$ \textbf{\textcolor{Maroon}{freedom 
 
 \item[Sprout:] Protocol for interactive apps on cellular networks
 
-\visible<2->{{\fbox{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = flicker noise, \textbf{\textcolor{DarkGreen}{mission}} = max throughput with delay $<$ 0.1 s}}}
+\visible<2->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = Cox process, \textbf{\textcolor{DarkGreen}{mission}} = max throughput with delay $<$ 0.1 s}}}
 
 \item[]
 
-\item[Remy:] Computer-generated protocol design
+\item[Remy:] Distributed multi-user congestion control
 
-\visible<3->{{\fbox{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = user-specified networks \& workloads, \textbf{\textcolor{DarkGreen}{mission}} = user-specified}}}
+\visible<3->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = user-specified networks \& workloads, \textbf{\textcolor{DarkGreen}{mission}} = user-specified}}}
+
+%\item[]
+
+%\item[]
+%
+%\item[Mosh:] Mobile shell \& state sync protocol
+%
+%\visible<4->{{\fbox{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = ANSI terminal emulator, \textbf{\textcolor{DarkGreen}{mission}} = convey latest frame}}}
 
 \item[]
 
-\item[Mosh:] Mobile shell \& state sync protocol
+\item[Alfalfa:] Video streaming app with computer-generated rate adaptation
 
-\visible<4->{{\fbox{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = ANSI terminal emulator, \textbf{\textcolor{DarkGreen}{mission}} = convey latest frame}}}
-
-\item[]
-
-\item[Alfalfa:] Video streaming app
-
-\visible<5->{{\fbox{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = VP8 decoder, \textbf{\textcolor{DarkGreen}{mission}} = quality vs.~startup vs.~stalls}}}
+\visible<4->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = VP8 decoder, \textbf{\textcolor{DarkGreen}{mission}} = quality vs.~startup vs.~stalls}}}
 
 \end{itemize}
 
@@ -192,16 +322,16 @@ Explicit design considerations $\rightarrow$ \textbf{\textcolor{Maroon}{freedom 
 
 \large
 
-\textit{Observation:}
+\textit{\bf Observation:}
 
-\hspace{10 pt} Videoconferences perform poorly over cellular networks.
+\hspace{10 pt} \colorbox{Bisque}{Videoconferences perform poorly over cellular networks.}
 
 \vspace{\baselineskip}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Verizon LTE ping delay during one TCP download}
+\frametitle{Verizon LTE throughput is highly variable}
 
 \begin{centering}
 
@@ -214,7 +344,7 @@ Explicit design considerations $\rightarrow$ \textbf{\textcolor{Maroon}{freedom 
 \end{frame}
 
 \begin{frame}
-\frametitle{Verizon LTE delay}
+\frametitle{During a download, LTE delays packets for $>10$ seconds}
 
 \begin{centering}
 
@@ -360,12 +490,18 @@ KW, Anirudh Sivaraman, and Hari Balakrishnan, \textbf{Stochastic Forecasts Achie
 \begin{frame}
 
 \begin{centering}
-\frametitle{Sprout's \textcolor{DarkBlue}{\bf model}}
-\def\svgwidth{0.85 \columnwidth}\input{sprout-model.pdf_tex}
+\frametitle{Sprout's \textcolor{DarkBlue}{\bf model}: G/M/1 queue governed by Cox process}
+\def\svgwidth{\columnwidth}\input{sprout-model.pdf_tex}
 
 \end{centering}
 
+%\vspace{\baselineskip}
+
+%All source code was \bf{\textcolor{DarkGreen}{frozen before data collection began.}}
+
 \end{frame}
+
+\begin{comment}
 
 \begin{frame}
 \frametitle{Sprout's model parameters}
@@ -389,6 +525,8 @@ Risk tolerance: & $5 \%$ \\
 All source code was \bf{\textcolor{DarkGreen}{frozen before data collection began.}}
 
 \end{frame}
+
+\end{comment}
 
 \begin{frame}
 \frametitle{\textbf{Infer}: current link speed}
@@ -575,35 +713,6 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 \end{frame}
 
 \begin{frame}
-\frametitle{Limitations}
-
-\large
-
-\begin{itemize}
-
-\item Sprout wants to control all of the traffic on a queue.
-
-\begin{itemize}
-
-\item Cells generally have \textcolor{DarkBlue}{\textbf{per-user}} queues\ldots
-
-\item \ldots but Wi-Fi and wired networks usually don't.
-
-\end{itemize}
-
-\item[]
-
-\item What if cell link \emph{isn't} the bottleneck?
-
-\item[]
-
-\item Assumption: application always has data to send
-
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}
 \frametitle{Sprout's mark}
 
 \only<1>{\noindent \hspace{-.75 cm} \includegraphics[width=1.1\textwidth]{march2-9.pdf}
@@ -615,74 +724,40 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 
 \end{frame}
 
-\section{Remy}
-
 \begin{frame}
-\frametitle{Now that we have 40+ algorithms\ldots}
+\frametitle{Sprout models one user's traffic on one bottleneck}
 
-\Large
-
-\begin{itemize}
-
-\item Sprout for cellular networks?
-
-\item Wireless-TCP for Wi-Fi?
-
-\item High-BDP-TCP for transoceanic links?
-
-\item Datacenter-TCP for datacenters?
-
-\item CoDel for cable modems?
-
-
-
-\item \textcolor{DarkGreen}{\bf TBA-TCP for tomorrow's networks?}
-
-\end{itemize}
+\only<1>{\noindent\includegraphics[width=\textwidth]{dumbbell-2.pdf}}\only<2>{\noindent\includegraphics[width=\textwidth]{dumbbell-1.pdf}}\only<3>{\noindent\includegraphics[width=\textwidth]{dumbbell.pdf}}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Rational choice of scheme is challenging}
-
-\begin{centering}
-\includegraphics[height=20 pt]{cubic.pdf}\hspace{8 pt}{\bf vs.}\hspace{8 pt}\includegraphics[height=20 pt]{compound.pdf}
-
-\end{centering}
-
-\ssline
-\ssline
-\ssline
-
-\begin{itemize}
-
-\Large
-
-\item Different missions?
-
-\item Different assumptions about network?
-
-\item One scheme just plain better?
-
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Networks constrained by a fuzzy idea of TCP's assumptions}
+\frametitle{Limitations of Sprout}
 
 \Large
 
 \begin{itemize}
-\item Mask stochastic loss
-\item Bufferbloat
-\item Mask out-of-order delivery
-\item No parallel/multipath routing
+
+\item Cells generally have \textcolor{DarkBlue}{\textbf{per-user}} queues\ldots
+
+\item[] \ldots but Wi-Fi and wired networks usually don't.
+
 \item[]
-\item[] {\it Advice for Internet Subnetwork Designers}\\ (RFC 3819) is 21,000 words!
+
+\item What if there are multiple users?
+
 \end{itemize}
 
+%\item[]
+
+%\item Assumption: application always has data to send
+
+
 \end{frame}
+
+\begin{comment}
+
+\section{Remy}
 
 \begin{frame}
 \frametitle{Apps hack around TCP}
@@ -712,31 +787,7 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 
 \end{frame}
 
-\begin{frame}
-\frametitle{Idea: computer-generated protocols}
-
-\Large Transport layer should adapt to \textbf{whatever}:
-
-\begin{itemize}
-\item network does \visible<2>{(\textbf{\textcolor{DarkBlue}{model}})}
-
-\item application wants \visible<2>{(\textbf{\textcolor{DarkGreen}{mission}})}
-
-\end{itemize}
-
-\vspace{\baselineskip}
-\vspace{\baselineskip}
-
-\scriptsize
-
-KW and Hari Balakrishnan, \textbf{End-to-End Transmission Control by Modeling Uncertainty about the Network State}, \textit{HotNets 2011}
-
-\vspace{\baselineskip}
-\vspace{\baselineskip}
-
-KW and Hari Balakrishnan, \textbf{TCP ex Machina: Computer-Generated Congestion Control}, \textit{SIGCOMM 2013}
-
-\end{frame}
+\end{comment}
 
 \begin{frame}
 \frametitle{What we built}
@@ -765,6 +816,14 @@ KW and Hari Balakrishnan, \textbf{TCP ex Machina: Computer-Generated Congestion 
 \ssline
 
 \textcolor{DarkBlue}{\bf Time:} hours to days
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+\scriptsize
+
+KW and Hari Balakrishnan, \textbf{TCP ex Machina: Computer-Generated Congestion Control}, \textit{SIGCOMM 2013}
 
 \end{frame}
 
@@ -901,13 +960,6 @@ $\min_i \textsf{throughput}_i$
 
 \end{frame}
 
-\begin{frame}
-\frametitle{Dumbbell network}
-
-\only<1>{\noindent\includegraphics[width=\textwidth]{dumbbell-2.pdf}}\only<2>{\noindent\includegraphics[width=\textwidth]{dumbbell-1.pdf}}\only<3>{\noindent\includegraphics[width=\textwidth]{dumbbell.pdf}}
-
-\end{frame}
-
 %\begin{frame}
 %\frametitle{Statement of the problem}
 %
@@ -951,7 +1003,7 @@ $\min_i \textsf{throughput}_i$
 
 \end{centering}
 
-\visible<2->{\Large \noindent \hspace{-.5cm} \mbox{\textcolor{DarkBlue}{\textbf{*} Assuming every node is running the same algorithm.}}}
+\visible<2->{\Large \noindent \hspace{-.5cm} \mbox{\textcolor{DarkBlue}{\textbf{*} Assuming every user is running the same algorithm.}}}
 
 \end{frame}
 
@@ -1069,7 +1121,7 @@ $\min_i \textsf{throughput}_i$
 
 \item[]
 
-\item \ldots but others might help on some networks
+\item[] \ldots but others might help on some networks
 
 \end{itemize}
 
