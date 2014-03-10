@@ -307,7 +307,7 @@ given a \textcolor{DarkBlue}{\bf model} and a \textcolor{DarkGreen}{\bf mission}
 
 \item[]
 
-\item[Remy:] Distributed multi-user congestion control
+\item[Remy:] Design tool that generates congestion-control algorithms
 
 \visible<3->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = user-specified networks \& workloads, \textbf{\textcolor{DarkGreen}{mission}} = user-specified}}}
 
@@ -321,9 +321,9 @@ given a \textcolor{DarkBlue}{\bf model} and a \textcolor{DarkGreen}{\bf mission}
 
 \item[]
 
-\item[Alfalfa:] Video streaming app with computer-generated rate adaptation
+\item[Alfalfa:] Network video that optimizes an objective function
 
-\visible<4->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = VP8 decoder, \textbf{\textcolor{DarkGreen}{mission}} = quality vs.~startup vs.~stalls}}}
+\visible<4->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = varying net, \textbf{\textcolor{DarkGreen}{mission}} = quality vs.~startup vs.~stalls}}}
 
 \end{itemize}
 
@@ -504,7 +504,7 @@ KW, Anirudh Sivaraman, and Hari Balakrishnan, \textbf{Stochastic Forecasts Achie
 \begin{frame}
 
 \begin{centering}
-\frametitle{Sprout's \textcolor{DarkBlue}{\bf model}: G/M/1 queue governed by Cox process}
+\frametitle{Sprout's \textcolor{DarkBlue}{\bf model}: G/M/1 queue}
 \def\svgwidth{\columnwidth}\input{sprout-model.pdf_tex}
 
 \end{centering}
@@ -716,7 +716,7 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 
 \\
 
-\raisebox{0.8 ex}{\includegraphics[width=3 cm]{Google_Logo_Old.PNG}} & & \raisebox{-0.3cm}{\includegraphics[width=3 cm]{viber.png}} \\
+\raisebox{0.8 ex}{\includegraphics[width=3 cm]{Google_Logo_Old.PNG}} & \includegraphics[width=2.5 cm]{skype-logo.jpg} & \raisebox{-0.3cm}{\includegraphics[width=2.5 cm]{viber.png}} \\
 
 \\
 
@@ -854,7 +854,9 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 
 \end{centering}
 
-\visible<2->{\Large \noindent \hspace{-.5cm} \mbox{\textcolor{DarkBlue}{\textbf{*} Assuming every user is running the same algorithm.}}}
+\visible<1->{\Large \noindent \hspace{-.5cm} \mbox{\textcolor{DarkBlue}{\textbf{*} Given everything a node has observed so far.\textcolor{Maroon}{$^{\textbf{**}}$}}}}
+
+\visible<2->{\Large \noindent \hspace{-.5cm} \mbox{\textcolor{Maroon}{\textbf{**} Assuming every node is running the same algorithm.}}}
 
 \end{frame}
 
@@ -875,19 +877,15 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 
 \pause
 
+\item[$\Omega$:] \mbox{acks from corresponding receiver ($O$ = deterministic)}
+
+\pause
+
 \item[$T$:] the \textbf{\textcolor{DarkBlue}{model}}
 
 \pause
 
 \item[$R$:] the \textbf{\textcolor{DarkGreen}{mission}}
-
-\pause
-
-\item[$\Omega$:] acknowledgements from corresponding receiver
-
-\pause
-
-\item[$O$:] deterministic
 
 \item[]
 
@@ -1078,11 +1076,30 @@ $\min_i \textsf{throughput}_i$
 
 \Large
 
+\begin{centering}
+\fbox{
+\begin{minipage}{6 cm}
+\LARGE At this moment, do I:
+
+\begin{itemize}
+
+\item send a packet
+\item not send a packet?
+
+\end{itemize}
+
+\end{minipage}
+}
+
+\end{centering}
+
+\ssline
+\ssline
+\ssline
+
 \begin{itemize}
 
 \item Best decision given all history: not tractable
-
-\item[]
 
 \item Instead, \textbf{\textcolor{DarkBlue}{summarize the history}}
 
@@ -1098,19 +1115,13 @@ $\min_i \textsf{throughput}_i$
 \hspace{0.5 cm}\begin{minipage}{10.0 cm}
 \begin{itemize}
 
-\item[$rec\_rate_\alpha$:] \textbf{short-term} moving average of interval between acks
+\item[$rec\_rate_\alpha$:] \textcolor{Red}{\textit{``How fast are packets arriving (now)?''}}
 
-\textcolor{Red}{\textit{``How fast are packets arriving (now)?''}}
-
-\item[$rec\_rate_\beta$:] \textbf{long-term} moving average of same
-
-\textcolor{Red}{\textit{``How fast are packets arriving (smoothed)?''}}
+\item[$rec\_rate_\beta$:] \textcolor{Red}{\textit{``How fast are packets arriving (smoothed)?''}}
 
 \item[]
 
-\item[$send\_rate$:] moving average of interval between acked timestamps
-
-\textcolor{Red}{\textit{``How fast was I sending?''}}
+\item[$send\_rate$:] \textcolor{Red}{\textit{``How fast have I been sending?''}}
 
 \item[]
 
@@ -1241,7 +1252,7 @@ RTT & & Uniform(100, 200) & ms \\
 
 \\
 
-$n$ & & Uniform(1, 16) \\
+$n$ & & Uniform(1, 16) & how many flows? \\
 
 \\
 
@@ -1292,10 +1303,10 @@ $n$ & & Uniform(1, 16) \\
 \end{frame}
 
 \begin{frame}
-\frametitle{Scenario 1: details}
+\frametitle{Scenario 1: model \& mission}
 
 \begin{tabular}{lllll}
-\bf Quantity & & \bf Simulation parameter & \bf Remy assumptions \\
+\bf Quantity & & \bf Simulation parameter & \bf Remy \textcolor{DarkBlue}{model} \\
 
 \hline Link speed & & 15~Mbps & Uniform(10, 20)~Mbps \\
 
@@ -1312,7 +1323,7 @@ $n$ & & 8 & Uniform(1, 16) \\
 \ssline
 \ssline
 
-\textbf{Remy objective:} \[\sum_i \log \left[ \frac{\textsf{throughput}_i}{\big(\textsf{delay}_i\big)^{\textcolor{DarkBlue}{{\bm \delta}}}} \right]\]
+\textbf{Remy \textcolor{DarkGreen}{missions}:} \[\sum_i \log \left[ \frac{\textsf{throughput}_i}{\big(\textsf{delay}_i\big)^{\textcolor{DarkBlue}{{\bm \delta}}}} \right]\]
 
 \[\textcolor{DarkBlue}{{\bm \delta}} \in \bigg\{ \frac{1}{10}, 1, 10 \bigg\} \]
 
@@ -1414,6 +1425,31 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \end{frame}
 
+\begin{frame}
+\frametitle{Remy: new tradeoffs}
+
+\large
+
+\begin{itemize}
+
+\item Traditionally: simple rules, complex behavior
+
+\item With Remy: complex rules, consistent behavior
+
+\item[]
+
+\item \textcolor{DarkGreen}{Computer-designed} {\LARGE \textbf{\textgreater}} \textcolor{Red}{human-designed}
+
+\item \textcolor{DarkGreen}{End-to-end} {\LARGE \textbf{\textgreater}} \textcolor{Red}{in-network}
+
+\item[]
+
+\item Nice to make transport a function of \textbf{\textcolor{DarkBlue}{model}} \& \textbf{\textcolor{DarkGreen}{mission}}
+
+\end{itemize}
+
+\end{frame}
+
 %\begin{frame}
 %\frametitle{Ongoing work}
 %
@@ -1438,6 +1474,8 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 %\end{frame}
 
 \section{Other work}
+
+\begin{comment}
 
 \begin{frame}
 \frametitle{Mosh}
@@ -1467,6 +1505,8 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 \end{centering}
 
 \end{frame}
+
+\end{comment}
 
 %\begin{frame}
 %\frametitle{Mosh---next steps}
@@ -1538,6 +1578,8 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \end{frame}
 
+\begin{comment}
+
 \begin{frame}
 \frametitle{Crowdsourced overlay networks}
 
@@ -1561,6 +1603,8 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \end{frame}
 
+\end{comment}
+
 \begin{frame}
 
 \frametitle{Systems ex Machina}
@@ -1575,9 +1619,9 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \item[Sprout] 2--4$\times$ the throughput and 7--9$\times$ less delay than Skype, etc.
 
-\item[Remy] computer-generated protocol design
+\item[Remy] computer-generated multi-user protocol design
 
-\item[Mosh] mobile shell app in wide use
+%\item[Mosh] mobile shell app in wide use
 
 \item[Alfalfa] network video that optimizes an objective
 
