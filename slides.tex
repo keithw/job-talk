@@ -180,10 +180,8 @@ In 20 years, computer networks have seen dramatic change:
 
 \end{comment}
 
-\begin{comment}
-
 \begin{frame}
-\frametitle{Rational choice among ``imperative'' schemes is challenging}
+\frametitle{Rational choice among transports is challenging}
 
 \begin{centering}
 \includegraphics[height=20 pt]{cubic.pdf}\hspace{8 pt}{\bf vs.}\hspace{8 pt}\includegraphics[height=20 pt]{compound.pdf}
@@ -208,8 +206,6 @@ In 20 years, computer networks have seen dramatic change:
 
 \end{frame}
 
-\end{comment}
-
 \begin{frame}
 \frametitle{Network evolution constrained by fuzzy assumptions}
 
@@ -217,16 +213,32 @@ In 20 years, computer networks have seen dramatic change:
 
 On today's Internet:
 
+\begin{columns}
+
+\begin{column}{0.66\textwidth}
+
 \begin{itemize}
-\item Mask stochastic loss $\rightarrow$ {\bf \textcolor{Maroon}{long delays}}
+\item Mask stochastic loss
+\item[] \hspace{1 cm}$\rightarrow$ {\bf \textcolor{Maroon}{long delays}}
 %\item Bufferbloat
-\item \mbox{No out-of-order delivery $\rightarrow$ {\bf \textcolor{Maroon}{no parallel routing}}}
-\item[]
-\item[]
-\item[]
-\item[]
-\item[] {\it Advice for Internet Subnetwork Designers}\\ (RFC 3819) is 21,000 words!
+
+\item No out-of-order delivery
+\item[] \hspace{1 cm}$\rightarrow$ {\bf \textcolor{Maroon}{no parallel routing}}
 \end{itemize}
+
+\end{column}
+
+\begin{column}{0.33\textwidth}
+
+\includegraphics[width=\textwidth]{transport.pdf}
+
+\end{column}
+
+\end{columns}
+
+\vspace{\baselineskip}
+
+{\it Advice for Internet Subnetwork Designers}\\ (RFC 3819) is 21,000 words!
 
 \end{frame}
 
@@ -343,6 +355,24 @@ given a \textcolor{DarkBlue}{\bf model} and a \textcolor{DarkGreen}{\bf mission}
 
 \end{frame}
 
+\begin{frame}
+\frametitle{Main takeaway}
+
+\Large
+
+As systems designers, \textbf{\textcolor{DarkBlue}{showing our work}$^{*}$}
+frees adjacent systems to evolve.
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+\normalsize
+
+\textcolor{DarkBlue}{\textbf{*} (clearly enough for a computer to recreate the design)}
+
+\end{frame}
+
 \section{Sprout}
 
 \begin{frame}
@@ -447,7 +477,7 @@ given a \textcolor{DarkBlue}{\bf model} and a \textcolor{DarkGreen}{\bf mission}
 \begin{centering}
 \colorbox{LightBlue}{
 \begin{tabular}{p{4 in}}
-\LARGE Can a transport protocol that's a \textit{function} of
+\LARGE Can a transport protocol that's a function of
 a \textbf{\textcolor{DarkBlue}{model}} and
 \textbf{\textcolor{DarkGreen}{mission}} do better?
 \end{tabular}}
