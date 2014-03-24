@@ -1,6 +1,6 @@
 \documentclass[svgnames]{beamer}
 
-\usepackage[T1]{fontenc}
+%\usepackage[T1]{fontenc}
 
 \usetheme{default}
 \usecolortheme{beaver}
@@ -13,7 +13,7 @@
 
 \author{Keith~Winstein}
 \institute{MIT Computer Science and Artificial Intelligence Laboratory\\\vspace{\baselineskip}\textcolor{DarkBlue}{}}
-\date{March 17, 2014}
+\date{March 24, 2014}
 
 \beamertemplatenavigationsymbolsempty
 
@@ -180,6 +180,8 @@ In 20 years, computer networks have seen dramatic change:
 
 \end{comment}
 
+\begin{comment}
+
 \begin{frame}
 \frametitle{Rational choice among ``imperative'' schemes is challenging}
 
@@ -206,8 +208,10 @@ In 20 years, computer networks have seen dramatic change:
 
 \end{frame}
 
+\end{comment}
+
 \begin{frame}
-\frametitle{Networks constrained by transport's fuzzy assumptions}
+\frametitle{Network evolution constrained by fuzzy assumptions}
 
 \Large
 
@@ -217,6 +221,8 @@ On today's Internet:
 \item Mask stochastic loss $\rightarrow$ {\bf \textcolor{Maroon}{long delays}}
 %\item Bufferbloat
 \item \mbox{No out-of-order delivery $\rightarrow$ {\bf \textcolor{Maroon}{no parallel routing}}}
+\item[]
+\item[]
 \item[]
 \item[]
 \item[] {\it Advice for Internet Subnetwork Designers}\\ (RFC 3819) is 21,000 words!
@@ -239,7 +245,7 @@ On today's Internet:
 \end{comment}
 
 \begin{frame}
-\frametitle{Idea: declarative design via computer-generated protocols}
+\frametitle{\textbf{Idea}: computer-generated transport}
 
 \Large Transport layer should adapt to \textbf{whatever}
 
@@ -313,19 +319,25 @@ given a \textcolor{DarkBlue}{\bf model} and a \textcolor{DarkGreen}{\bf mission}
 
 \visible<3->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = user-specified networks \& workloads, \textbf{\textcolor{DarkGreen}{mission}} = user-specified}}}
 
-%\item[]
+\item[]
 
-%\item[]
-%
-%\item[Mosh:] Mobile shell \& state sync protocol
-%
-%\visible<4->{{\fbox{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = ANSI terminal emulator, \textbf{\textcolor{DarkGreen}{mission}} = convey latest frame}}}
+\end{itemize}
+
+\hrule
+
+\begin{itemize}
+
+\item[]
+
+\item[Mosh:] Mobile shell
+
+\visible<4->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = ANSI terminal, \textbf{\textcolor{DarkGreen}{mission}} = convey \textit{latest} frame}}}
 
 \item[]
 
 \item[Alfalfa:] Network video that optimizes an objective function
 
-\visible<4->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = varying net, \textbf{\textcolor{DarkGreen}{mission}} = quality vs.~startup vs.~stalls}}}
+\visible<5->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = varying net, \textbf{\textcolor{DarkGreen}{mission}} = quality vs.~startup vs.~stalls}}}
 
 \end{itemize}
 
@@ -426,6 +438,21 @@ given a \textcolor{DarkBlue}{\bf model} and a \textcolor{DarkGreen}{\bf mission}
 \item The killer: \textbf{self-inflicted queueing delay}.
 
 \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Question}
+
+\begin{centering}
+\colorbox{LightBlue}{
+\begin{tabular}{p{4 in}}
+\LARGE Can a transport protocol that's a \textit{function} of
+a \textbf{\textcolor{DarkBlue}{model}} and
+\textbf{\textcolor{DarkGreen}{mission}} do better?
+\end{tabular}}
+
+\end{centering}
 
 \end{frame}
 
@@ -650,6 +677,17 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 %\end{frame}
 
 \begin{frame}
+\frametitle{Question}
+
+\begin{centering}
+\colorbox{LightBlue}{
+\LARGE Can a protocol do even better?}
+
+\end{centering}
+
+\end{frame}
+
+\begin{frame}
 \frametitle{M.I.T.~6.829 contest (March--April 2013)}
 
 \begin{itemize}
@@ -710,7 +748,7 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 \end{frame}
 
 \begin{frame}
-\frametitle{Some commercial interest and implementations}
+\frametitle{Commercial interest and implementations}
 
 \begin{tabular}{cp{2 cm}c}
 
@@ -811,6 +849,20 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 \end{frame}
 
 \end{comment}
+
+\begin{frame}
+\frametitle{Question}
+
+\begin{centering}
+\colorbox{LightBlue}{
+\begin{tabular}{p{4.2 in}}
+\LARGE Can a computer-generated transport \mbox{protocol}
+solve \textbf{multi-user} congestion control?
+\end{tabular}}
+
+\end{centering}
+
+\end{frame}
 
 \begin{frame}
 \frametitle{Prior work (abridged)}
@@ -1365,8 +1417,7 @@ $n$ & & 8 & Uniform(1, 16) \\
 \Large
 
 \begin{quote}
-\color{DarkBlue} \textit{From the perspective of a network endpoint,
-  {\bf what information is helpful}?}
+\color{DarkBlue} \textit{What's the cost of \textbf{backwards-} and \textbf{forwards-compatibility}?}
 
 \end{quote}
 
@@ -1417,7 +1468,7 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 \end{frame}
 
 \begin{frame}
-\frametitle{The cost of generality}
+\frametitle{The cost of generality, or forwards-compatibility}
 
 \begin{centering}
 
@@ -1446,7 +1497,9 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \item[]
 
-\item Nice to make transport a function of \textbf{\textcolor{DarkBlue}{model}} \& \textbf{\textcolor{DarkGreen}{mission}}
+\item \fbox{Nice to make transport a \textit{function} of \textbf{\textcolor{DarkBlue}{model}} \& \textbf{\textcolor{DarkGreen}{mission}}}
+
+\item Can then ask all kinds of cool questions!
 
 \end{itemize}
 
@@ -1561,7 +1614,7 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \item ``Frames'' are functions $\textsc{\{raster\}}^3 \times \textsc{I} \rightarrow \textsc{\{raster\}}^3 \times \textsc{I} \times \textsc{\{raster?\}}$
 
-\item Player chooses best achievable path from start $\rightarrow$ \textit{fin}
+\item Player chooses \textbf{\textcolor{DarkBlue}{best achievable path}} from start $\rightarrow$ \textit{fin}
 
 \vspace{\baselineskip}
 
@@ -1580,32 +1633,28 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \end{frame}
 
-\begin{comment}
-
 \begin{frame}
-\frametitle{Crowdsourced overlay networks}
+\frametitle{BYOR (bring-your-own-routing) networks}
 
 \large
 
 \begin{itemize}
 
-\item Any user can contribute a route to the network
+\item Anybody can contribute a link
 
-\item Users bid to provide multicast/unicast routes
+\item Links offer to carry $n$ packets @ $\tau$ latency and $d$ price
 
-\item Makes multicast economical, but what about cheaters?
+\item Endpoints assemble routes, pay links along the way
 
-\item[]
+\item []
 
-\item \textcolor{DarkBlue}{\bf Model}: Connectivity graph and order book
+\item Can order book be distributed?
 
-\item \textcolor{DarkGreen}{\bf Mission}: Match supply and demand
+\item Tractable and stable?
 
 \end{itemize}
 
 \end{frame}
-
-\end{comment}
 
 \begin{frame}
 
@@ -1623,7 +1672,7 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \item[Remy] computer-generated multi-user protocol design
 
-%\item[Mosh] mobile shell app in wide use
+\item[Mosh] mobile shell app in wide use
 
 \item[Alfalfa] network video that optimizes an objective
 
