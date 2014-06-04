@@ -13,7 +13,7 @@
 
 \author{Keith~Winstein}
 \institute{MIT Computer Science and Artificial Intelligence Laboratory\\\vspace{\baselineskip}\textcolor{DarkBlue}{}}
-\date{May 14, 2014}
+\date{June 4, 2014}
 
 \beamertemplatenavigationsymbolsempty
 
@@ -58,6 +58,8 @@ Tim Shepard & & John Wroclawski \\
 Damon Wischik & & Hariharan Rahul \\
 Chris Lesniewski & & Mike Walfish \\ 
 Eric Jonas & & Vikash Mansinghka \\
+Bill McCloskey & & Marissa Cheng \\
+Mom, Dad, & & and Allison \\
 \end{tabular}
 \end{frame}
 
@@ -199,6 +201,8 @@ In 20 years, computer networks have seen dramatic change:
 
 \end{comment}
 
+\begin{comment}
+
 \begin{frame}
 \frametitle{Rational choice among transports is challenging}
 
@@ -260,6 +264,8 @@ On today's Internet:
 {\it Advice for Internet Subnetwork Designers}\\ (RFC 3819) is 21,000 words!
 
 \end{frame}
+
+\end{comment}
 
 \begin{comment}
 
@@ -342,33 +348,33 @@ given a \textcolor{DarkBlue}{\bf model} and a \textcolor{DarkGreen}{\bf mission}
 
 \item[Sprout:] Protocol for interactive apps on cellular networks
 
-\visible<2->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = Cox process, \textbf{\textcolor{DarkGreen}{mission}} = max throughput with delay $<$ 0.1 s}}}
+%\visible<2->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = Cox process, \textbf{\textcolor{DarkGreen}{mission}} = max throughput with delay $<$ 0.1 s}}}
 
 \item[]
 
 \item[Remy:] Design tool that generates congestion-control algorithms
 
-\visible<3->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = user-specified networks \& workloads, \textbf{\textcolor{DarkGreen}{mission}} = user-specified}}}
+%\visible<3->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = user-specified networks \& workloads, \textbf{\textcolor{DarkGreen}{mission}} = user-specified}}}
 
 \item[]
 
-\end{itemize}
+%\end{itemize}
 
-\hrule
+%\hrule
 
-\begin{itemize}
+%\begin{itemize}
+%
+%\item[]
+%
+%\item[Alfalfa:] Network video that optimizes an objective function
+%
+%\visible<4->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = varying net, \textbf{\textcolor{DarkGreen}{mission}} = quality vs.~startup vs.~stalls}}}
 
-\item[]
+%\item[]
 
-\item[Alfalfa:] Network video that optimizes an objective function
+%\item[Mosh:] Mobile shell
 
-\visible<4->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = varying net, \textbf{\textcolor{DarkGreen}{mission}} = quality vs.~startup vs.~stalls}}}
-
-\item[]
-
-\item[Mosh:] Mobile shell
-
-\visible<5->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = ANSI terminal, \textbf{\textcolor{DarkGreen}{mission}} = convey \textit{latest} frame}}}
+%\visible<5->{{\colorbox{Bisque}{\footnotesize\textbf{\textcolor{DarkBlue}{model}} = ANSI terminal, \textbf{\textcolor{DarkGreen}{mission}} = convey \textit{latest} frame}}}
 
 \end{itemize}
 
@@ -405,8 +411,16 @@ to evolve.
 \hspace{10 pt} \colorbox{Bisque}{Videoconferences perform poorly over cellular networks.}
 
 \vspace{\baselineskip}
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+\footnotesize
+
+KW, Anirudh Sivaraman, and Hari Balakrishnan, \textbf{Stochastic Forecasts Achieve High Throughput and Low Delay over Cellular Networks}, \textit{USENIX NSDI 2013}
 
 \end{frame}
+
+\begin{comment}
 
 \begin{frame}
 \frametitle{Verizon LTE throughput is highly variable}
@@ -459,6 +473,8 @@ to evolve.
 
 \end{frame}
 
+\end{comment}
+
 \begin{frame}
 \frametitle{Skype's performance}
 
@@ -471,6 +487,8 @@ to evolve.
 \def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus4.pdf_tex}
 }
 \end{frame}
+
+\begin{comment}
 
 \begin{frame}
 \frametitle{What's wrong?}
@@ -491,6 +509,8 @@ to evolve.
 
 \end{frame}
 
+\end{comment}
+
 \begin{frame}
 \frametitle{Question}
 
@@ -505,6 +525,8 @@ a \textbf{\textcolor{DarkBlue}{model}} and
 \end{centering}
 
 \end{frame}
+
+\begin{comment}
 
 \begin{frame}
 \frametitle{Sprout's \textcolor{DarkGreen}{\bf mission}}
@@ -580,6 +602,8 @@ KW, Anirudh Sivaraman, and Hari Balakrishnan, \textbf{Stochastic Forecasts Achie
 
 \end{frame}
 
+\end{comment}
+
 \begin{frame}
 
 \begin{centering}
@@ -620,6 +644,8 @@ All source code was \bf{\textcolor{DarkGreen}{frozen before data collection bega
 \end{frame}
 
 \end{comment}
+
+\begin{comment}
 
 \begin{frame}
 \frametitle{\textbf{Infer}: current link speed}
@@ -664,13 +690,16 @@ All source code was \bf{\textcolor{DarkGreen}{frozen before data collection bega
 \end{centering}
 \end{frame}
 
+\end{comment}
+
 \begin{frame}
 \frametitle{Sprout's results}
 
 \end{frame}
 
 \begin{frame}
-\only<1>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus4.pdf_tex}}\only<2>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus3.pdf_tex}}\only<3>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus2.pdf_tex}}\only<4>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus1.pdf_tex}}\only<5>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Uplink.pdf_tex}}%\only<7>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Verizon3G1xEV-DO-Downlink.pdf_tex}}\only<8>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Verizon3G1xEV-DO-Uplink.pdf_tex}}\only<9>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{ATTLTE-Downlink.pdf_tex}}\only<10>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{ATTLTE-Uplink.pdf_tex}}\only<11>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{T-Mobile3GUMTS-Downlink.pdf_tex}}\only<12>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{T-Mobile3GUMTS-Uplink.pdf_tex}}
+\only<1>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus4.pdf_tex}}\only<2>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus3.pdf_tex}}\only<3>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus2.pdf_tex}}\only<4>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Downlink-minus1.pdf_tex}}
+%\only<5>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{VerizonLTE-Uplink.pdf_tex}}%\only<7>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Verizon3G1xEV-DO-Downlink.pdf_tex}}\only<8>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Verizon3G1xEV-DO-Uplink.pdf_tex}}\only<9>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{ATTLTE-Downlink.pdf_tex}}\only<10>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{ATTLTE-Uplink.pdf_tex}}\only<11>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{T-Mobile3GUMTS-Downlink.pdf_tex}}\only<12>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{T-Mobile3GUMTS-Uplink.pdf_tex}}
 \end{frame}
 
 \begin{frame}
@@ -700,6 +729,8 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 
 \end{frame}
 
+\begin{comment}
+
 \begin{frame}
 \frametitle{Sprout is end-to-end, but comparable to in-net control}
 \vspace{-1 cm}
@@ -725,6 +756,8 @@ Verizon 3G/LTE, AT\&T LTE, T-Mobile 3G uplink and downlink:
 %\end{itemize}
 %
 %\end{frame}
+
+\end{comment}
 
 \begin{frame}
 \frametitle{Question}
@@ -917,6 +950,8 @@ solve \textbf{multi-user} congestion control?
 
 \end{frame}
 
+\begin{comment}
+
 \begin{frame}
 \frametitle{Prior work (abridged)}
 
@@ -1004,6 +1039,8 @@ solve \textbf{multi-user} congestion control?
 
 \end{frame}
 
+\end{comment}
+
 \begin{frame}
 \frametitle{What we built}
 
@@ -1056,6 +1093,8 @@ KW and Hari Balakrishnan, \textbf{TCP ex Machina: Computer-Generated Congestion 
 %\end{itemize}
 %
 %\end{frame}
+
+\begin{comment}
 
 \begin{frame}
 \frametitle{Encoding the designer's prior assumptions}
@@ -1214,6 +1253,8 @@ $\min_i \textsf{throughput}_i$
 
 \end{frame}
 
+\end{comment}
+
 \begin{frame}
 \frametitle{A RemyCC tracks four congestion signals}
 
@@ -1240,6 +1281,8 @@ $\min_i \textsf{throughput}_i$
 \end{minipage}
 
 \end{frame}
+
+\begin{comment}
 
 \begin{frame}
 \frametitle{Why these four features?}
@@ -1315,6 +1358,8 @@ $\min_i \textsf{throughput}_i$
 
 \end{frame}
 
+\end{comment}
+
 \begin{frame}
 \frametitle{Remy's job}
 
@@ -1378,6 +1423,14 @@ $n$ & & Uniform(1, 16) & how many flows? \\
 
 \[\sum_i \log \left[ \frac{\textsf{throughput}_i}{\textsf{delay}_i} \right]\]
 
+\vspace{\baselineskip}
+
+\begin{centering}
+
+\textcolor{DarkGreen}{throughput good}, \textcolor{DarkRed}{delay bad} $\rightarrow$ ``proportionally fair power''
+
+\end{centering}
+
 \end{frame}
 
 \input{optimize.tex}
@@ -1402,12 +1455,18 @@ $n$ & & Uniform(1, 16) & how many flows? \\
 
 \end{frame}
 
+\begin{comment}
+
 \begin{frame}
 \frametitle{Scenario 1: fixed-rate network, homogenous senders}
 
 \includegraphics[width=\textwidth]{dumbbell.pdf}
 
 \end{frame}
+
+\end{comment}
+
+\begin{comment}
 
 \begin{frame}
 \frametitle{Scenario 1: model \& mission}
@@ -1436,6 +1495,8 @@ $n$ & & 8 & Uniform(1, 16) \\
 
 \end{frame}
 
+\end{comment}
+
 \begin{frame}
 \frametitle{Scenario 1: throughput-delay plot}
 
@@ -1455,6 +1516,8 @@ $n$ & & 8 & Uniform(1, 16) \\
 %
 %\end{frame}
 
+\begin{comment}
+
 \begin{frame}
 \frametitle{Scenario 2: Verizon LTE, $n = 8$}
 
@@ -1463,6 +1526,8 @@ $n$ & & 8 & Uniform(1, 16) \\
 
 \end{centering}
 \end{frame}
+
+\end{comment}
 
 \begin{frame}
 \frametitle{Remy as an instrument to study network science}
@@ -1498,6 +1563,8 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \end{frame}
 
+\begin{comment}
+
 \begin{frame}
 \frametitle{RemyCC competing against itself}
 
@@ -1519,6 +1586,8 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 \end{centering}
 
 \end{frame}
+
+\end{comment}
 
 \begin{frame}
 \frametitle{The cost of generality, or forwards-compatibility}
@@ -1559,6 +1628,8 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 
 \end{frame}
 
+\begin{comment}
+
 \begin{frame}
 \frametitle{Remy: new tradeoffs}
 
@@ -1585,6 +1656,8 @@ Anirudh Sivaraman, KW, Pratiksha Thaker, and Hari Balakrishnan,
 \end{itemize}
 
 \end{frame}
+
+\end{comment}
 
 %\begin{frame}
 %\frametitle{Ongoing work}
@@ -1774,10 +1847,14 @@ keithw@mit.edu
 
 \end{frame}
 
+\begin{comment}
+
 \begin{frame}
 
 \only<1>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Verizon3G1xEV-DO-Downlink.pdf_tex}}\only<2>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{Verizon3G1xEV-DO-Uplink.pdf_tex}}\only<3>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{ATTLTE-Downlink.pdf_tex}}\only<4>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{ATTLTE-Uplink.pdf_tex}}\only<5>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{T-Mobile3GUMTS-Downlink.pdf_tex}}\only<6>{\def\svgwidth{\columnwidth}\footnotesize\import{dotgraphs3/}{T-Mobile3GUMTS-Uplink.pdf_tex}}
 
 \end{frame}
+
+\end{comment}
 
 \end{document}
